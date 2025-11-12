@@ -1,0 +1,122 @@
+"use client";
+
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import AnimatedBrand from "@/components/ui/AnimatedBrand";
+import { navigation, siteMetadata } from "@/data/content";
+
+export default function Header() {
+  const pathname = usePathname();
+  const [open, setOpen] = useState(false);
+
+  // Fallback only if navigation.main is missing/empty
+  const navItems =
+    navigation?.main && navigation.main.length > 0
+      ? navigation.main
+      : [
+          { href: "/about", label: "About" },
+          { href: "/get-involved", label: "Get Involved" },
+        ];
+
+  const isActive = (href) =>
+    href === "/"
+      ? pathname === "/"
+      : pathname === href || pathname.startsWith(href + "/");
+
+  return (
+    <header className="sticky top-0 z-50 bg-[#0B1020]/90 backdrop-blur-md border-white/10">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+        <Link
+          href="/"
+          aria-label={siteMetadata?.name ?? "Home"}
+          className="font-semibold tracking-tight text-xl"
+        >
+          <AnimatedBrand />
+        </Link>
+
+        <nav className="hidden md:flex items-center gap-7 text-sm">
+          {navItems.map((item) => (
+            <Link
+              key={item.href}
+              href={item.href}
+              className={`relative transition-colors hover:text-white ${
+                isActive(item.href) ? "text-white" : "text-white/70"
+              }`}
+            >
+              {item.label}
+              {isActive(item.href) && (
+                <span className="absolute -bottom-1 left-0 right-0 h-[2px] bg-amber-500" />
+              )}
+            </Link>
+          ))}
+          <Link
+            href="/donate"
+            className="inline-flex items-center rounded-lg px-4 py-2 bg-gradient-to-r from-purple-500 to-amber-500 text-white font-medium hover:shadow-lg hover:scale-105 transition-all"
+          >
+            Donate
+          </Link>
+        </nav>
+
+        <button
+          className="md:hidden inline-flex items-center justify-center w-10 h-10 rounded-md text-white/90 hover:bg-white/5 transition-colors"
+          onClick={() => setOpen((v) => !v)}
+          aria-label="Toggle menu"
+        >
+          <div className="space-y-1.5">
+            <span
+              className={`block h-0.5 w-5 bg-current transition-transform ${
+                open ? "rotate-45 translate-y-2" : ""
+              }`}
+            />
+            <span
+              className={`block h-0.5 w-5 bg-current transition-opacity ${
+                open ? "opacity-0" : ""
+              }`}
+            />
+            <span
+              className={`block h-0.5 w-5 bg-current transition-transform ${
+                open ? "-rotate-45 -translate-y-2" : ""
+              }`}
+            />
+          </div>
+        </button>
+      </div>
+
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="md:hidden border-t border-white/10 overflow-hidden"
+          >
+            <div className="mx-auto max-w-7xl px-4 py-4 flex flex-col gap-3">
+              {navItems.map((item) => (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  onClick={() => setOpen(false)}
+                  className={`block py-2 ${
+                    isActive(item.href) ? "text-white" : "text-white/70"
+                  }`}
+                >
+                  {item.label}
+                </Link>
+              ))}
+              <Link
+                href="/donate"
+                onClick={() => setOpen(false)}
+                className="mt-2 inline-flex w-fit items-center rounded-lg px-4 py-2 bg-gradient-to-r from-purple-500 to-amber-500 text-white font-medium"
+              >
+                Donate
+              </Link>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </header>
+  );
+}
