@@ -6,6 +6,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import AnimatedBrand from "@/components/ui/AnimatedBrand";
 import { navigation, siteMetadata } from "@/data/content";
+import Image from "next/image";
 
 export default function Header() {
   const pathname = usePathname();
@@ -28,13 +29,15 @@ export default function Header() {
   return (
     <header className="sticky top-0 z-50 bg-[#0B1020]/90 backdrop-blur-md border-white/10">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-        <Link
-          href="/"
-          aria-label={siteMetadata?.name ?? "Home"}
-          className="font-semibold tracking-tight text-xl"
-        >
-          <AnimatedBrand />
-        </Link>
+        <div className="flex items-center  w-fit justify-center">
+          <Link
+            href="/"
+            aria-label={siteMetadata?.name ?? "Home"}
+            className="font-semibold tracking-tight text-xl flex items-center"
+          >
+            <AnimatedBrand showLogo={true} />
+          </Link>
+        </div>
 
         <nav className="hidden md:flex items-center gap-7 text-sm">
           {navItems.map((item) => (

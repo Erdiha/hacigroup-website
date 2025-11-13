@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
+import GlobeText from "@/components/ui/GlobeText";
 
 export default function HeroSection() {
   const [prefersReduced, setPrefersReduced] = useState(false);
@@ -18,11 +19,13 @@ export default function HeroSection() {
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-[#0d1117]">
+      <GlobeText text=" Powered by Community" gradient={["white", "orange"]} />
+
       {/* Background */}
       <div className="absolute inset-0">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,_rgba(139,123,216,0.15)_0%,_transparent_50%)]" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_60%,_rgba(251,191,36,0.12)_0%,_transparent_50%)]" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,_rgba(139,123,216,0.08)_0%,_transparent_70%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(139,123,216,0.15)_0%,transparent_50%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_60%,rgba(251,191,36,0.12)_0%,transparent_50%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(139,123,216,0.08)_0%,transparent_70%)]" />
         {!prefersReduced && (
           <motion.div
             className="absolute inset-0 opacity-10"

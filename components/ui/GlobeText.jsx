@@ -3,16 +3,6 @@
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 
-/**
- * GlobeText - Text that curves along an invisible globe's surface
- * Static curved text with subtle fade-in animation on page load
- *
- * IMPORTANT: This component is absolutely positioned and does NOT affect layout.
- * Place it inside a container with position: relative and overflow: hidden.
- *
- * @param {string} text - The text to display
- * @param {string} className - Additional CSS classes for text styling
- */
 export default function GlobeText({
   text = "Join the Movement",
   className = "",
@@ -28,41 +18,61 @@ export default function GlobeText({
     return () => mq.removeEventListener?.("change", update);
   }, []);
 
-  // Skip animation if reduced motion is preferred
-  if (prefersReduced) {
-    return null;
-  }
+  const svg = (
+    <svg
+      viewBox="15 00 1000 300"
+      className="w-full h-auto"
+      preserveAspectRatio="xMidYMid meet"
+    >
+      <defs>
+        <path id="globePath" d="M 80,200 Q 500,40 920,200" fill="none" />
+      </defs>
+
+      <text
+        fontSize="60"
+        letterSpacing="5"
+        className={`font-bold select-none ${className}`}
+        fill="currentColor" // FILLED text, no seams
+        opacity="0.08" // very subtle, adjust as needed
+      >
+        <textPath
+          href="#globePath"
+          startOffset="50%"
+          textAnchor="middle"
+          textLength="820"
+          lengthAdjust="spacingAndGlyphs"
+        >
+          {text}
+        </textPath>
+      </text>
+    </svg>
+  );
 
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none">
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-5xl">
-        <motion.svg
-          viewBox="0 0 1000 300"
-          className="w-full h-auto"
-          preserveAspectRatio="xMidYMid meet"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{
-            duration: 1.5,
-            ease: "easeOut",
-          }}
-        >
-          <defs>
-            {/* Define the curved path - arc that simulates globe surface */}
-            <path id="globePath" d="M 100,200 Q 500,50 900,200" fill="none" />
-          </defs>
-
-          {/* Text follows the curved path */}
-          <text
-            className={`font-black fill-white/10 select-none ${className}`}
-            fontSize="80"
-            letterSpacing="8"
+      <div className="absolute top-1/5 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-5xl">
+        {prefersReduced ? (
+          <div>{svg}</div>
+        ) : (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1.2, ease: "easeOut" }}
           >
-            <textPath href="#globePath" startOffset="50%" textAnchor="middle">
-              {text}
-            </textPath>
-          </text>
-        </motion.svg>
+            <motion.div
+              initial={{ x: -18 }}
+              animate={{ x: 18 }}
+              transition={{
+                duration: 16,
+                repeat: Infinity,
+                repeatType: "reverse",
+                ease: "easeInOut",
+              }}
+            >
+              {svg}
+            </motion.div>
+          </motion.div>
+        )}
       </div>
     </div>
   );

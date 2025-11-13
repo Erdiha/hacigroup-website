@@ -23,6 +23,11 @@ export const metadata = {
   },
   description:
     "Parent organization for NELA Ride and The Handy Hack — nonprofit tech for equity and sustainability.",
+
+  icons: {
+    icon: "/logo.png", // <— use the actual file you have
+  },
+
   openGraph: {
     title: "HaciGroup",
     description:

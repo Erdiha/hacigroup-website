@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { siteMetadata, navigation } from "@/data/content";
+import AnimatedBrand from "../ui/AnimatedBrand";
 
 function usePrefersReducedMotion() {
   const [prefers, setPrefers] = useState(false);
@@ -47,7 +48,8 @@ export default function SiteFooter() {
         <div className="grid gap-10 md:grid-cols-3">
           <div>
             <h3 className="text-white text-2xl font-black uppercase tracking-tight">
-              {siteMetadata.name}
+              {/* {siteMetadata.name} */}
+              <AnimatedBrand showLogo={false} />
             </h3>
             <p className="mt-3 text-white/75 font-semibold leading-relaxed">
               {siteMetadata.description}

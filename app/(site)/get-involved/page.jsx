@@ -17,24 +17,7 @@ export default function GetInvolvedPage() {
     <div className="min-h-screen bg-[#0B1020]">
       {/* Hero */}
       <section className="relative py-20 sm:py-24 lg:py-32 px-4 sm:px-6 lg:px-8 overflow-hidden">
-        {/* Globe Text Background Animation */}
-        <GlobeText text="Join the Movement" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(139,92,246,0.15)_0%,transparent_50%)]" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_60%,rgba(245,158,11,0.12)_0%,transparent_50%)]" />
         <div className="relative max-w-5xl mx-auto text-center">
-          {/* <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="inline-flex items-center gap-2 bg-purple-500/10 border border-purple-500/30 rounded-full px-4 sm:px-6 py-2 sm:py-3 mb-6 sm:mb-8"
-          >
-            <span className="text-2xl sm:text-3xl lg:text-4xl">
-              {c.hero.badgeIcon}
-            </span>
-            <span className="text-white font-bold text-sm sm:text-base">
-              {c.hero.badgeText}
-            </span>
-          </motion.div> */}
-
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}

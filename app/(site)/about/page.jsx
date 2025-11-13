@@ -1,3 +1,5 @@
+//TODO - renew this page to make it unified as other opages colros statemsnt everythign ahs to be purpsoefull ready for deploy and real data
+
 "use client";
 
 import React, { useState } from "react";
