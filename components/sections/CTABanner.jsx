@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
+import { ctaBanner } from "@/data/content";
 
 function usePrefersReducedMotion() {
   const [prefers, setPrefers] = useState(false);
@@ -44,7 +45,7 @@ export default function CTABanner() {
           transition={{ duration: 0.6 }}
           className="text-5xl sm:text-6xl font-black text-white mb-6 leading-tight"
         >
-          We’re Taking Technology Back.
+          {ctaBanner.title}
         </motion.h2>
 
         <motion.p
@@ -54,8 +55,7 @@ export default function CTABanner() {
           transition={{ duration: 0.8 }}
           className="text-xl text-white/85 mb-10 font-medium"
         >
-          Every ride, every repair, every app we build — it’s owned by the
-          people who use it. That’s how we start fixing what’s broken.
+          {ctaBanner.description}
         </motion.p>
 
         <motion.div
@@ -63,38 +63,26 @@ export default function CTABanner() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 1 }}
-          className="flex flex-col sm:flex-row gap-4 justify-center"
+          className="flex justify-center"
         >
           <Link
-            href="/donate"
-            className="group relative inline-flex items-center justify-center px-10 py-5 text-lg font-black text-white rounded-2xl border-4 border-black shadow-[6px_6px_0_0_rgba(0,0,0,1)] hover:shadow-[8px_8px_0_0_rgba(0,0,0,1)] hover:-translate-x-0.5 hover:-translate-y-0.5 transition-all"
-            style={{
-              backgroundImage: "linear-gradient(90deg, #8b5cf6, #f59e0b)",
-            }}
+            href={ctaBanner.cta.href}
+            className="group inline-flex items-center justify-center px-8 py-4 text-lg font-bold text-white rounded-xl border-2 border-white/20 bg-white/10 hover:bg-white/20 hover:border-white/40 transition-all"
           >
-            <span className="flex items-center gap-2 uppercase">
-              Join the Rebuild
-              <svg
-                className="w-6 h-6 group-hover:translate-x-1 transition-transform"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={3}
-                  d="M17 8l4 4m0 0l-4 4m4-4H3"
-                />
-              </svg>
-            </span>
-          </Link>
-
-          <Link
-            href="/get-involved"
-            className="inline-flex items-center justify-center px-10 py-5 text-lg font-black text-white rounded-2xl bg-[#161b22] border-4 border-white/30 hover:bg-[#1c2128] hover:border-white/50 transition-all uppercase"
-          >
-            Pitch In Locally
+            {ctaBanner.cta.text}
+            <svg
+              className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M17 8l4 4m0 0l-4 4m4-4H3"
+              />
+            </svg>
           </Link>
         </motion.div>
       </div>

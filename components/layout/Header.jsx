@@ -51,12 +51,12 @@ export default function Header() {
               )}
             </Link>
           ))}
-          <Link
+          {/* <Link
             href="/donate"
             className="inline-flex items-center rounded-lg px-4 py-2 bg-gradient-to-r from-purple-500 to-amber-500 text-white font-medium hover:shadow-lg hover:scale-105 transition-all"
           >
             Donate
-          </Link>
+          </Link> */}
         </nav>
 
         <button
@@ -106,13 +106,13 @@ export default function Header() {
                   {item.label}
                 </Link>
               ))}
-              <Link
+              {/* <Link
                 href="/donate"
                 onClick={() => setOpen(false)}
                 className="mt-2 inline-flex w-fit items-center rounded-lg px-4 py-2 bg-gradient-to-r from-purple-500 to-amber-500 text-white font-medium"
               >
                 Donate
-              </Link>
+              </Link> */}
             </div>
           </motion.div>
         )}

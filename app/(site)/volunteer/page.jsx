@@ -220,7 +220,7 @@ export default function VolunteerPage() {
           >
             USE YOUR SKILLS
             <br />
-            <span className="bg-gradient-to-r from-purple-400 to-amber-400 bg-clip-text text-transparent">
+            <span className="bg-linear-to-r from-purple-400 to-amber-400 bg-clip-text text-transparent">
               TO BUILD THE FUTURE
             </span>
           </motion.h1>
@@ -386,7 +386,7 @@ export default function VolunteerPage() {
                   {opp.title}
                 </h3>
 
-                <p className="text-white/70 text-sm mb-4 flex-grow">
+                <p className="text-white/70 text-sm mb-4 grow">
                   {opp.description}
                 </p>
 
@@ -417,7 +417,7 @@ export default function VolunteerPage() {
 
                 <button
                   onClick={() => handleApply(opp)}
-                  className="w-full px-4 py-3 bg-gradient-to-r from-purple-500 to-amber-500 text-white font-bold rounded-xl hover:scale-105 transition-all"
+                  className="w-full px-4 py-3 bg-linear-to-r from-purple-500 to-amber-500 text-white font-bold rounded-xl hover:scale-105 transition-all"
                 >
                   Express Interest
                 </button>
@@ -505,7 +505,7 @@ export default function VolunteerPage() {
                 className={`w-full py-4 font-black text-lg rounded-xl border-4 border-black transition-all ${
                   isSubmitting || !formData.name || !formData.email
                     ? "bg-gray-500 text-gray-300 cursor-not-allowed"
-                    : "bg-gradient-to-r from-purple-500 to-amber-500 text-white shadow-[6px_6px_0_0_rgba(0,0,0,1)] hover:shadow-[8px_8px_0_0_rgba(0,0,0,1)] hover:-translate-x-0.5 hover:-translate-y-0.5"
+                    : "bg-linear-to-r from-purple-500 to-amber-500 text-white shadow-[6px_6px_0_0_rgba(0,0,0,1)] hover:shadow-[8px_8px_0_0_rgba(0,0,0,1)] hover:-translate-x-0.5 hover:-translate-y-0.5"
                 }`}
               >
                 {isSubmitting ? "Submitting..." : "Submit Interest"}

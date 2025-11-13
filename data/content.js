@@ -41,12 +41,12 @@ export const navigation = {
   ],
   footer: {
     programs: [
-      { href: "/programs/nela-ride", label: "NELA Ride" },
+      { href: "https://nelaride.com", label: "NELA Ride" },
       { href: "/programs/the-handy-hack", label: "The Handy Hack" },
     ],
     organization: [
       { href: "/about", label: "About" },
-      { href: "/impact", label: "Impact" },
+
       { href: "/get-involved", label: "Get Involved" },
       { href: "/donate", label: "Donate" },
     ],
@@ -144,7 +144,7 @@ export const programs = [
     description:
       "A nonprofit rideshare built to end extraction. Most of every fare goes to the driver. No surge games. Clear pricing that respects riders and workers.",
     icon: "🚗",
-    href: "/programs/nela-ride",
+    href: "https://nelaride.com",
     color: "from-purple-500 to-amber-500",
     cta: "See NELA Ride",
     comingSoon: false,
@@ -194,7 +194,7 @@ export const team = {
       title: "Executive Director & Founder",
       bio: "Brief bio here - background in tech/nonprofit, passion for community empowerment, vision for HaciGroup. 2-3 sentences about experience and motivation.",
       image: "👤",
-      linkedin: "https://linkedin.com",
+      linkedin: "https://www.linkedin.com/in/erdi-haciogullari-919246222/",
       email: "founder@haci.group",
     },
     {
@@ -452,7 +452,7 @@ export const faqs = {
     {
       question: "When will NELA Ride and Handy Hack launch?",
       answer:
-        "We're targeting Spring 2025 for initial pilots in select LA neighborhoods. Sign up for updates to be notified when we're ready.",
+        "We're targeting before 2026 for initial pilots in select LA neighborhoods. Sign up for updates to be notified when we're ready.",
     },
     {
       question: "How can I get involved if I'm not in Los Angeles?",
@@ -528,7 +528,7 @@ export const storyPanels = [
 export const foundingStory = {
   year: "2024",
   location: "Los Angeles",
-  title: "Founded in Los Angeles",
+  title: "Founded in North East Los Angeles (NELA)",
   description:
     "Born from frustration with extractive tech platforms, HaciGroup started as a simple question: What if essential services were built for communities, not shareholders? We're proving that nonprofit technology can scale, compete, and win—while keeping value where it belongs.",
 };
@@ -545,13 +545,10 @@ export const heroContent = {
 };
 
 export const ctaBanner = {
-  title: "We're Taking Technology Back.",
+  title: "Ready to Build the Future?",
   description:
-    "Every ride, every repair, every app we build — it's owned by the people who use it. That's how we start fixing what's broken.",
-  ctas: [
-    { text: "Join the Rebuild", href: "/donate" },
-    { text: "Pitch In Locally", href: "/get-involved" },
-  ],
+    "Help us launch nonprofit platforms that put people before profits. Your support makes fair technology possible.",
+  cta: { text: "Support Our Mission", href: "/donate" },
 };
 
 export const volunteerBenefits = [

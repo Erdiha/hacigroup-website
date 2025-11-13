@@ -58,7 +58,7 @@ export default function SiteFooter() {
           <nav className="grid grid-cols-2 gap-8 text-sm">
             {/* Programs */}
             <div>
-              <p className="text-white/60 font-bold uppercase tracking-wide mb-3">
+              <p className="text-white/80 font-black uppercase tracking-wide mb-3 ">
                 Programs
               </p>
               <ul className="space-y-2">
@@ -77,7 +77,7 @@ export default function SiteFooter() {
 
             {/* Organization */}
             <div>
-              <p className="text-white/60 font-bold uppercase tracking-wide mb-3">
+              <p className="text-white/80 font-black uppercase tracking-wide mb-3">
                 Organization
               </p>
               <ul className="space-y-2">
@@ -141,12 +141,14 @@ export default function SiteFooter() {
             {navigation.footer.legal.map((item, i) => (
               <React.Fragment key={item.href}>
                 {i > 0 && <span className="text-white/20">•</span>}
-                <Link
+                <a
                   href={item.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="text-white/50 hover:text-white transition-colors"
                 >
                   {item.label}
-                </Link>
+                </a>
               </React.Fragment>
             ))}
           </div>

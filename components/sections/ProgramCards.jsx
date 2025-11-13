@@ -60,9 +60,11 @@ export default function ProgramCards() {
 
                 {/* Learn More button */}
                 <div className="flex justify-start absolute bottom-2.5  right-2.5 shadow-amber shadow-2xl rounded-full">
-                  <Link
+                  <a
                     href={p.href}
                     aria-disabled={p.comingSoon}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     tabIndex={p.comingSoon ? -1 : 0}
                     onClick={(e) => p.comingSoon && e.preventDefault()}
                     className={`inline-flex items-center px-6 py-3 rounded-full border-2 text-sm font-bold uppercase transition-all ${
@@ -87,7 +89,7 @@ export default function ProgramCards() {
                         />
                       </svg>
                     )}
-                  </Link>
+                  </a>
                 </div>
               </div>
             </motion.article>

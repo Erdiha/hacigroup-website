@@ -245,6 +245,8 @@ export default function AboutPage() {
                   ) : (
                     <Link
                       href={p.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
                       className="inline-flex items-center gap-2 bg-white text-purple-700 font-black px-6 py-3 rounded-full hover:scale-105 transition-all uppercase text-sm border-4 border-black shadow-lg"
                     >
                       Learn More →
