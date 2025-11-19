@@ -72,7 +72,7 @@ export default function ContactPage() {
         />
       )}
 
-      <section className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+      <section className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 flex flex-col justify-center items-center w-full">
         {/* Header */}
         <motion.div
           initial={prefersReduced ? false : { opacity: 0, y: 16 }}
@@ -89,7 +89,7 @@ export default function ContactPage() {
           </p>
         </motion.div>
 
-        <div className="grid lg:grid-cols-3 gap-8">
+        <div className="flex">
           {/* Form */}
           <motion.div
             initial={prefersReduced ? false : { opacity: 0, y: 16 }}
@@ -196,7 +196,7 @@ export default function ContactPage() {
           </motion.div>
 
           {/* Sidebar: direct info */}
-          <motion.aside
+          {/* <motion.aside
             initial={prefersReduced ? false : { opacity: 0, y: 16 }}
             animate={prefersReduced ? {} : { opacity: 1, y: 0 }}
             transition={{ duration: 0.45, delay: 0.1 }}
@@ -283,7 +283,7 @@ export default function ContactPage() {
                 </a>
               </div>
             </div>
-          </motion.aside>
+          </motion.aside> */}
         </div>
       </section>
     </main>
