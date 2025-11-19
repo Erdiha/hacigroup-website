@@ -1,17 +1,64 @@
 "use client";
 
-import React from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   involvementPathways,
   faqs,
   getInvolvedContent as c,
 } from "@/data/content";
-import GlobeText from "@/components/ui/GlobeText";
+import Section from "@/components/ui/Section";
+import Container from "@/components/ui/Container";
+import SectionTitle from "@/components/ui/SectionTitle";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "@/lib/firebase";
+import {
+  ApplicationModal,
+  VolunteerForm,
+} from "@/components/ui/ApplicationModal";
+
+const safeTimestamp = (value) => {
+  if (!value) return 0;
+  if (typeof value?.toDate === "function") {
+    return value.toDate().getTime();
+  }
+  const time = new Date(value).getTime();
+  return Number.isNaN(time) ? 0 : time;
+};
 
 export default function GetInvolvedPage() {
-  const [openFaq, setOpenFaq] = React.useState(null);
+  const [openFaq, setOpenFaq] = useState(null);
+  const [positions, setPositions] = useState([]);
+  const [positionsLoading, setPositionsLoading] = useState(true);
+  const [positionsError, setPositionsError] = useState("");
+  const [selectedPosition, setSelectedPosition] = useState(null);
+
+  useEffect(() => {
+    async function loadPositions() {
+      try {
+        setPositionsError("");
+        const snapshot = await getDocs(collection(db, "positions"));
+        const data = snapshot.docs
+          .map((doc) => ({
+            id: doc.id,
+            ...doc.data(),
+          }))
+          .sort(
+            (a, b) => safeTimestamp(b.createdAt) - safeTimestamp(a.createdAt)
+          );
+        setPositions(data);
+      } catch (error) {
+        console.error("Error loading positions:", error);
+        setPositionsError(
+          "Unable to load open positions right now. Please try again later."
+        );
+      } finally {
+        setPositionsLoading(false);
+      }
+    }
+    loadPositions();
+  }, []);
 
   return (
     <div className="min-h-screen bg-[#0B1020]">
@@ -61,61 +108,95 @@ export default function GetInvolvedPage() {
           </motion.div>
         </div>
       </section>
+      <Section variant="secondary">
+        <Container>
+          <SectionTitle
+            title="Open Positions"
+            subtitle="Specific roles we're actively recruiting for right now."
+          />
 
-      {/* Ways to Get Involved */}
-      <section className="py-16 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8 bg-[#0f1528]">
-        <div className="max-w-7xl mx-auto">
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white text-center mb-3 sm:mb-4">
-            {c.ways.title}
-          </h2>
-          <p className="text-white/70 text-center mb-10 sm:mb-12 max-w-2xl mx-auto text-sm sm:text-base">
-            {c.ways.subtitle}
-          </p>
+          {positionsError && (
+            <div className="bg-red-500/10 border border-red-500/30 text-red-200 rounded-2xl px-4 py-3 mb-6 text-sm">
+              {positionsError}
+            </div>
+          )}
 
-          <div className="grid sm:grid-cols-2 gap-6 sm:gap-8">
-            {involvementPathways.map((p, i) => (
-              <motion.div
-                key={p.title}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-                className="group bg-[#161b22] border-2 border-white/10 rounded-2xl p-6 sm:p-8 hover:border-purple-500/50 transition-all"
-              >
-                <div className="mb-6">
-                  <div className="text-5xl sm:text-6xl mb-3">{p.icon}</div>
-                  <h3 className="text-xl sm:text-2xl font-bold text-white mb-1">
-                    {p.title}
-                  </h3>
-                  <p className="text-purple-400 text-xs sm:text-sm font-semibold">
-                    {p.tagline}
-                  </p>
-                </div>
-                <p className="text-white/80 mb-6 text-sm sm:text-base leading-relaxed">
-                  {p.description}
-                </p>
-                <div className="space-y-2 mb-6">
-                  {p.benefits.map((b) => (
-                    <div
-                      key={b}
-                      className="flex items-center gap-2 text-xs sm:text-sm text-white/70"
-                    >
-                      <span className="text-purple-400 shrink-0">✓</span>
-                      <span>{b}</span>
-                    </div>
-                  ))}
-                </div>
-                <Link
-                  href={p.href}
-                  className="block w-full px-6 py-3 bg-linear-to-r from-purple-500 to-amber-500 text-white font-bold text-center rounded-xl hover:opacity-90 transition-all text-sm sm:text-base"
+          {positionsLoading ? (
+            <p className="text-center text-white/60 py-10">
+              Loading opportunities...
+            </p>
+          ) : positions.length === 0 ? (
+            <div className="text-center text-white/60 py-12">
+              <p className="text-lg font-semibold mb-2">
+                No open positions right now
+              </p>
+              <p className="text-sm text-white/50">
+                Submit the volunteer interest form below and we&apos;ll reach
+                out when something is a good fit.
+              </p>
+            </div>
+          ) : (
+            <div className="grid md:grid-cols-2 gap-6">
+              {positions.map((position, i) => (
+                <motion.div
+                  key={position.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.05 }}
+                  className="bg-[#161b22] border-2 border-white/10 rounded-2xl p-6 hover:border-purple-500/50 transition-all flex flex-col gap-4"
                 >
-                  {p.cta} →
-                </Link>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="text-5xl">{position.icon || "💼"}</div>
+                    <div className="flex flex-col items-end gap-2">
+                      <span className="text-xs font-bold px-3 py-1 bg-purple-500/20 text-purple-300 rounded-full border border-purple-500/30">
+                        {position.type || "Role"}
+                      </span>
+                      <span className="text-xs text-white/60">
+                        📍 {position.location || "Remote"}
+                      </span>
+                    </div>
+                  </div>
+
+                  <div>
+                    <h3 className="text-xl font-bold text-white mb-2">
+                      {position.title}
+                    </h3>
+                    <p className="text-purple-400 text-sm font-semibold mb-3">
+                      {position.commitment || "Flexible"}
+                    </p>
+                    <p className="text-white/70 text-sm leading-relaxed mb-3">
+                      {position.description}
+                    </p>
+                  </div>
+
+                  {Array.isArray(position.skills) &&
+                    position.skills.length > 0 && (
+                      <div className="flex flex-wrap gap-2">
+                        {position.skills.map((skill, idx) => (
+                          <span
+                            key={`${position.id}-${idx}`}
+                            className="text-xs px-2 py-1 bg-white/5 text-white/70 rounded-full border border-white/10"
+                          >
+                            {skill}
+                          </span>
+                        ))}
+                      </div>
+                    )}
+
+                  <button
+                    onClick={() => setSelectedPosition(position)}
+                    className="w-full mt-auto px-4 py-3 bg-gradient-to-r from-purple-500 to-amber-500 text-white font-bold rounded-xl hover:shadow-lg hover:shadow-purple-500/40 transition-all"
+                  >
+                    Apply Now
+                  </button>
+                </motion.div>
+              ))}
+            </div>
+          )}
+        </Container>
+      </Section>
+      <VolunteerForm anchorId="volunteer" />
 
       {/* Why It Matters */}
       <section className="py-16 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8">
@@ -149,7 +230,6 @@ export default function GetInvolvedPage() {
           </div>
         </div>
       </section>
-
       {/* How It Works */}
       <section className="py-16 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8 bg-[#0f1528]">
         <div className="max-w-5xl mx-auto">
@@ -180,7 +260,6 @@ export default function GetInvolvedPage() {
           </div>
         </div>
       </section>
-
       {/* FAQ */}
       <section className="py-16 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto">
@@ -220,7 +299,6 @@ export default function GetInvolvedPage() {
           </div>
         </div>
       </section>
-
       {/* Final CTA */}
       <section className="py-16 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8 bg-linear-to-b from-[#0f1528] to-[#0B1020] text-center">
         <div className="max-w-3xl mx-auto">
@@ -249,6 +327,14 @@ export default function GetInvolvedPage() {
           </div>
         </div>
       </section>
+      <AnimatePresence>
+        {selectedPosition && (
+          <ApplicationModal
+            position={selectedPosition}
+            onClose={() => setSelectedPosition(null)}
+          />
+        )}
+      </AnimatePresence>
     </div>
   );
 }

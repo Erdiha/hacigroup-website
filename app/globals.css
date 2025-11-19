@@ -1,41 +1,366 @@
 @import "tailwindcss";
 
-@theme {
-  --color-background: #0b1020;
-  --color-foreground: #f9fafb;
-  --color-muted: #9ca3af;
-  --color-secondary: #d1d5db;
-  --color-purple: #7c3aed;
-  --color-amber: #f59e0b;
+/* ==========================================
+   CSS VARIABLES - Change once, apply everywhere
+   ========================================== */
+@layer base {
+  :root {
+    /* Background Colors - Subtle, modern dark theme */
+    --bg-primary: 11 16 32;
+    /* #0B1020 - Main background */
+    --bg-secondary: 15 21 40;
+    /* #0F1528 - Section alternates */
+    --bg-tertiary: 22 27 34;
+    /* #161B22 - Cards/elevated */
+
+    /* Text Colors */
+    --text-primary: 255 255 255;
+    /* White */
+    --text-secondary: 203 213 225;
+    /* Slate-300 */
+    --text-muted: 148 163 184;
+    /* Slate-400 */
+
+    /* Brand Colors - Softer, more modern */
+    --brand-purple: 167 139 250;
+    /* Purple-400 (softer than 500) */
+    --brand-amber: 251 191 36;
+    /* Amber-400 */
+    --brand-green: 74 222 128;
+    /* Green-400 */
+
+    /* Accent Colors */
+    --accent-purple-dim: 139 92 246;
+    /* Purple-500 for gradients */
+    --accent-amber-dim: 245 158 11;
+    /* Amber-500 for gradients */
+
+    /* Border Colors */
+    --border-subtle: 255 255 255 / 0.1;
+    --border-medium: 255 255 255 / 0.2;
+    --border-strong: 255 255 255 / 0.4;
+
+    /* Spacing System */
+    --section-py: 5rem;
+    /* 80px */
+    --section-py-sm: 3.5rem;
+    /* 56px */
+    --container-max: 1280px;
+    /* 80rem */
+    --container-padding: 1rem;
+    /* 16px */
+
+    /* Animation */
+    --transition-base: 0.2s ease-out;
+    --transition-slow: 0.4s ease-out;
+
+    /* Responsive font scale */
+    --text-xs: clamp(0.75rem, 2vw, 0.875rem);
+    --text-sm: clamp(0.875rem, 2.5vw, 1rem);
+    --text-base: clamp(1rem, 3vw, 1.125rem);
+    --text-lg: clamp(1.125rem, 3.5vw, 1.25rem);
+    --text-xl: clamp(1.25rem, 4vw, 1.5rem);
+    --text-2xl: clamp(1.5rem, 5vw, 2rem);
+    --text-3xl: clamp(1.875rem, 6vw, 2.5rem);
+    --text-4xl: clamp(2.25rem, 7vw, 3rem);
+    --text-5xl: clamp(2.5rem, 8vw, 4rem);
+    
+      /* Mobile spacing - smaller on mobile */
+      --space-section: clamp(3rem, 8vw, 5rem);
+      --space-card: clamp(1rem, 3vw, 1.5rem);
+  }
+
+  /* Smooth scroll for accessibility */
+  html {
+    scroll-behavior: smooth;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+
+  /* Base body styles using variables */
+  body {
+    background: rgb(var(--bg-primary));
+    color: rgb(var(--text-primary));
+  }
 }
 
-* {
-  border-color: rgba(255, 255, 255, 0.1);
+/* ==========================================
+   UTILITY CLASSES - Reusable components
+   ========================================== */
+@layer components {
+
+  /* Container wrapper */
+  .container-custom {
+    width: 100%;
+    max-width: var(--container-max);
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: var(--container-padding);
+    padding-right: var(--container-padding);
+  }
+
+  @media (min-width: 640px) {
+    .container-custom {
+      padding-left: 1.5rem;
+      padding-right: 1.5rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .container-custom {
+      padding-left: 2rem;
+      padding-right: 2rem;
+    }
+  }
+
+  /* Section padding */
+  .section-padding {
+    padding-top: var(--section-py-sm);
+    padding-bottom: var(--section-py-sm);
+  }
+
+  @media (min-width: 768px) {
+    .section-padding {
+      padding-top: var(--section-py);
+      padding-bottom: var(--section-py);
+    }
+  }
+
+  /* Background variations */
+  .bg-primary {
+    background-color: rgb(var(--bg-primary));
+  }
+
+  .bg-secondary {
+    background-color: rgb(var(--bg-secondary));
+  }
+
+  .bg-tertiary {
+    background-color: rgb(var(--bg-tertiary));
+  }
+
+  /* Text variations */
+  .text-primary {
+    color: rgb(var(--text-primary));
+  }
+
+  .text-secondary {
+    color: rgb(var(--text-secondary));
+  }
+
+  .text-muted {
+    color: rgb(var(--text-muted));
+  }
+
+  /* Gradient text - Purple to Amber */
+  .gradient-text {
+    background: linear-gradient(to right,
+        rgb(var(--brand-purple)),
+        rgb(var(--brand-amber)));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  /* Gradient button - Purple to Amber */
+  .btn-gradient {
+    background: linear-gradient(90deg,
+        rgb(var(--accent-purple-dim)),
+        rgb(var(--accent-amber-dim)));
+    color: rgb(var(--text-primary));
+    font-weight: 700;
+    padding: 0.75rem 2rem;
+    border-radius: 0.75rem;
+    transition: all var(--transition-base);
+    border: 2px solid transparent;
+  }
+
+  .btn-gradient:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 30px -10px rgb(var(--brand-purple) / 0.5);
+  }
+
+  /* Card styles */
+  .card {
+    background-color: rgb(var(--bg-tertiary));
+    border: 2px solid rgb(var(--border-subtle));
+    border-radius: 1.5rem;
+    padding: 1.5rem;
+    transition: all var(--transition-base);
+  }
+
+  .card:hover {
+    border-color: rgb(var(--border-medium));
+  }
+
+  /* Subtle borders */
+  .border-subtle {
+    border-color: rgb(var(--border-subtle));
+  }
+
+  .border-medium {
+    border-color: rgb(var(--border-medium));
+  }
+
+  /* Radial gradient overlays */
+  .radial-purple {
+    background: radial-gradient(circle at 30% 20%,
+        rgb(var(--accent-purple-dim) / 0.12) 0%,
+        transparent 50%);
+  }
+
+  .radial-amber {
+    background: radial-gradient(circle at 70% 60%,
+        rgb(var(--accent-amber-dim) / 0.10) 0%,
+        transparent 50%);
+  }
 }
 
-html {
-  scroll-behavior: smooth;
+/* ==========================================
+   ANIMATIONS
+   ========================================== */
+@layer utilities {
+
+  /* Subtle grid animation */
+  .animated-grid {
+    background-image:
+      linear-gradient(rgb(var(--brand-purple) / 0.25) 1px, transparent 1px),
+      linear-gradient(90deg, rgb(var(--brand-purple) / 0.25) 1px, transparent 1px);
+    background-size: 50px 50px;
+    opacity: 0.1;
+  }
+
+  /* Focus states for accessibility */
+  .focus-ring {
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+  }
+
+  .focus-ring:focus-visible {
+    outline-color: rgb(var(--brand-purple));
+  }
 }
 
-body {
-  background-color: var(--color-background);
-  color: var(--color-foreground);
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+/* ==========================================
+   RESPONSIVE TYPOGRAPHY
+   ========================================== */
+@layer base {
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-weight: 900;
+    line-height: 1.1;
+    letter-spacing: -0.025em;
+  }
+
+  /* Responsive heading sizes */
+  h1 {
+    font-size: clamp(2rem, 5vw, 4rem);
+  }
+
+  h2 {
+    font-size: clamp(1.75rem, 4vw, 3rem);
+  }
+
+  h3 {
+    font-size: clamp(1.5rem, 3vw, 2rem);
+  }
+
+  p {
+    line-height: 1.6;
+  }
+}
+/* Mobile menu improvements */
+@media (max-width: 768px) {
+  .container-custom {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  h1 {
+    font-size: clamp(1.75rem, 8vw, 3rem);
+  }
 }
 
-:focus-visible {
-  outline: 2px solid var(--color-purple);
-  outline-offset: 2px;
+/* Touch targets for mobile */
+button,
+a {
+  min-height: 44px;
+  min-width: 44px;
 }
 
-@media (prefers-reduced-motion: reduce) {
+/* Better responsive typography */
+h1 {
+  font-size: var(--text-5xl);
+}
 
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
+h2 {
+  font-size: var(--text-4xl);
+}
+
+h3 {
+  font-size: var(--text-2xl);
+}
+
+p {
+  font-size: var(--text-base);
+}
+
+/* Mobile-first card sizing */
+.card {
+  padding: var(--space-card);
+}
+
+/* Section spacing - smaller on mobile */
+.section-padding {
+  padding-top: var(--space-section);
+  padding-bottom: var(--space-section);
+}
+
+/* Mobile touch targets - not too huge */
+@media (max-width: 768px) {
+
+  button,
+  .btn-gradient {
+    padding: 0.625rem 1.5rem;
+    font-size: 0.875rem;
+  }
+
+  /* Icon sizing on mobile */
+  .text-5xl {
+    font-size: 2.5rem !important;
+  }
+
+  .text-6xl {
+    font-size: 3rem !important;
+  }
+
+  /* Card borders less aggressive on mobile */
+  .border-4 {
+    border-width: 2px;
+  }
+
+  /* Shadows less intense on small screens */
+  .shadow-\[6px_6px_0_0_rgba\(0\,0\,0\,1\)\] {
+    box-shadow: 3px 3px 0 0 rgba(0, 0, 0, 1);
+  }
+}
+
+/* Tablet adjustments */
+@media (min-width: 768px) and (max-width: 1024px) {
+  h1 {
+    font-size: 3rem;
+  }
+
+  h2 {
+    font-size: 2.5rem;
   }
 }

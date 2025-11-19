@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { donateContent } from "@/data/content";
+import Container from "@/components/ui/Container";
 
 export default function DonatePage() {
   const { hero, tiers, paymentMethods, allocations, trust } = donateContent;
@@ -67,31 +68,31 @@ export default function DonatePage() {
   return (
     <div className="min-h-screen bg-[#0B1020]">
       {/* Mission Banner */}
-      <section className="relative py-5 px-4  ">
-        <div className="max-w-7xl mx-auto">
+      <section className="py-4 px-4">
+        <Container>
           <motion.div
             className="text-center"
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
           >
-            <p className="text-white/80 text-sm sm:text-base font-medium">
+            <p className="text-white/80 text-xs sm:text-sm font-medium">
               Supporting nonprofit technology platforms • 501(c)(3)
               tax-deductible
             </p>
           </motion.div>
-        </div>
+        </Container>
       </section>
 
       {/* Hero */}
-      <section className="relative py-20 px-4 sm:px-6 lg:px-8 overflow-hidden">
+      <section className="relative py-16 sm:py-20 px-4 overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(139,92,246,0.15)_0%,transparent_50%)]" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_60%,rgba(245,158,11,0.12)_0%,transparent_50%)]" />
-        <div className="relative max-w-4xl mx-auto text-center">
+        <Container className="relative max-w-4xl text-center">
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight"
+            className="text-3xl sm:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight"
           >
             Support Platform{" "}
             <span className="bg-linear-to-r from-purple-400 via-amber-400 to-purple-400 bg-clip-text text-transparent">
@@ -103,7 +104,7 @@ export default function DonatePage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="text-lg sm:text-xl text-white/80 max-w-2xl mx-auto mb-6 leading-relaxed"
+            className="text-base sm:text-lg text-white/80 max-w-2xl mx-auto mb-6 leading-relaxed"
           >
             Your contribution funds the development and operation of NELA Ride
             and The Handy Hack—nonprofit platforms that prioritize fair wages
@@ -114,33 +115,33 @@ export default function DonatePage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
-            className="text-base text-white/60 max-w-xl mx-auto"
+            className="text-sm sm:text-base text-white/60 max-w-xl mx-auto"
           >
             100% of donations support platform operations and development.
             HaciGroup is a registered 501(c)(3) nonprofit organization.
           </motion.p>
-        </div>
+        </Container>
       </section>
 
       {/* Why Donate Section */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-[#0f1528]">
-        <div className="max-w-4xl mx-auto text-center">
+      <section className="py-14 px-4 sm:px-6 lg:px-8 bg-[#0f1528]">
+        <Container className="max-w-5xl text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-3xl sm:text-4xl font-bold text-white mb-6">
+            <h2 className="text-2xl sm:text-4xl font-bold text-white mb-4">
               Why Your Support Matters
             </h2>
-            <p className="text-lg text-white/80 leading-relaxed mb-8">
+            <p className="text-base sm:text-lg text-white/80 leading-relaxed mb-8">
               We&apos;re building something different: technology platforms that
               serve people, not profits. Your donation directly funds the
               development and operation of fair, transparent alternatives to
-              extractive tech companies.
+              profit-first tech companies.
             </p>
-            <div className="grid sm:grid-cols-3 gap-6">
-              <div className="bg-white/5 border border-white/10 rounded-2xl p-6">
+            <div className="grid gap-4 sm:grid-cols-3">
+              <div className="bg-white/5 border border-white/10 rounded-2xl p-5 sm:p-6">
                 <div className="text-4xl mb-3">👥</div>
                 <h3 className="text-lg font-bold text-white mb-2">
                   Community-Owned
@@ -149,7 +150,7 @@ export default function DonatePage() {
                   Built by and for the people who use it
                 </p>
               </div>
-              <div className="bg-white/5 border border-white/10 rounded-2xl p-6">
+              <div className="bg-white/5 border border-white/10 rounded-2xl p-5 sm:p-6">
                 <div className="text-4xl mb-3">📊</div>
                 <h3 className="text-lg font-bold text-white mb-2">
                   Fully Transparent
@@ -158,50 +159,50 @@ export default function DonatePage() {
                   See exactly where every dollar goes
                 </p>
               </div>
-              <div className="bg-white/5 border border-white/10 rounded-2xl p-6">
+              <div className="bg-white/5 border border-white/10 rounded-2xl p-5 sm:p-6">
                 <div className="text-4xl mb-3">🌱</div>
                 <h3 className="text-lg font-bold text-white mb-2">
                   Sustainable Growth
                 </h3>
                 <p className="text-sm text-white/70">
-                  No profit extraction, just fair operations
+                  No investor skim, just fair operations
                 </p>
               </div>
             </div>
           </motion.div>
-        </div>
+        </Container>
       </section>
 
       {/* Tiers */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
-          <h2 className="text-3xl sm:text-4xl font-bold text-white text-center mb-3">
+      <section className="py-16 px-4 sm:px-6 lg:px-8">
+        <Container className="max-w-6xl">
+          <h2 className="text-2xl sm:text-4xl font-bold text-white text-center mb-3">
             Choose Your Impact Level
           </h2>
-          <p className="text-white/60 text-center mb-12 max-w-2xl mx-auto">
+          <p className="text-white/60 text-center mb-10 max-w-2xl mx-auto text-sm sm:text-base">
             Every contribution makes a difference. Pick an amount that works for
             you, or create your own.
           </p>
 
           {/* Frequency Toggle */}
-          <div className="flex justify-center mb-12">
-            <div className="bg-white/5 border-2 border-white/10 rounded-2xl p-2">
+          <div className="flex justify-center mb-10">
+            <div className="bg-white/5 border-2 border-white/10 rounded-2xl p-1 flex gap-1">
               <button
                 onClick={() => setIsMonthly(true)}
-                className={`px-8 py-3 rounded-xl font-bold transition-all ${
+                className={`px-6 py-2 rounded-xl text-sm sm:text-base font-semibold transition-all ${
                   isMonthly
                     ? "bg-linear-to-r from-purple-500 to-amber-500 text-white shadow-lg"
-                    : "text-white/50 hover:text-white"
+                    : "text-white/60 hover:text-white"
                 }`}
               >
                 Monthly
               </button>
               <button
                 onClick={() => setIsMonthly(false)}
-                className={`px-8 py-3 rounded-xl font-bold transition-all ${
+                className={`px-6 py-2 rounded-xl text-sm sm:text-base font-semibold transition-all ${
                   !isMonthly
                     ? "bg-linear-to-r from-purple-500 to-amber-500 text-white shadow-lg"
-                    : "text-white/50 hover:text-white"
+                    : "text-white/60 hover:text-white"
                 }`}
               >
                 One-Time
@@ -209,7 +210,7 @@ export default function DonatePage() {
             </div>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+          <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-4 mb-10">
             {tiers.map((tier, i) => (
               <motion.button
                 key={tier.id}
@@ -218,11 +219,11 @@ export default function DonatePage() {
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1 }}
                 onClick={() => handleTierSelect(tier.id)}
-                className={`text-left bg-[#161b22] border-2 rounded-3xl p-6 transition-all hover:scale-105 ${
+                className={`text-left bg-[#161b22] border-2 rounded-3xl p-5 sm:p-6 transition-all ${
                   selectedTier === tier.id
-                    ? "border-purple-500 shadow-lg shadow-purple-500/25 ring-2 ring-purple-500/50"
+                    ? "border-purple-500 shadow-lg shadow-purple-500/25 ring-2 ring-purple-500/40 scale-[1.01]"
                     : "border-white/10 hover:border-purple-500/50"
-                } ${tier.popular ? "ring-2 ring-amber-400" : ""}`}
+                } ${tier.popular ? "ring-2 ring-amber-400" : ""} focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-500`}
               >
                 {tier.popular && (
                   <div className="inline-flex items-center gap-1 bg-amber-400 text-black text-xs font-bold px-3 py-1 rounded-full mb-4">
@@ -230,18 +231,20 @@ export default function DonatePage() {
                     <span>MOST POPULAR</span>
                   </div>
                 )}
-                <div className="text-5xl mb-4">{tier.icon}</div>
-                <h3 className="text-xl font-bold text-white mb-2">
+                <div className="text-4xl mb-3">{tier.icon}</div>
+                <h3 className="text-lg font-bold text-white mb-1">
                   {tier.title}
                 </h3>
-                <div className="text-3xl font-black text-purple-400 mb-3">
+                <div className="text-2xl sm:text-3xl font-black text-purple-400 mb-2">
                   ${tier.amount}
                   <span className="text-white/50 text-sm font-normal">
                     /{isMonthly ? "mo" : "once"}
                   </span>
                 </div>
-                <p className="text-white/70 text-sm mb-4">{tier.description}</p>
-                <ul className="space-y-2">
+                <p className="text-white/70 text-sm mb-4">
+                  {tier.description}
+                </p>
+                <ul className="space-y-1.5">
                   {tier.benefits.map((b, j) => (
                     <li
                       key={j}
@@ -271,29 +274,29 @@ export default function DonatePage() {
                   value={customAmount}
                   onChange={handleCustomAmount}
                   placeholder="Any amount helps"
-                  className="w-full bg-white/5 border-2 border-white/10 rounded-2xl px-12 py-4 text-white text-center text-xl font-bold placeholder-white/30 focus:border-purple-500 focus:outline-none transition-colors"
+                  className="w-full bg-white/5 border-2 border-white/10 rounded-2xl px-12 py-3 text-white text-center text-lg sm:text-xl font-bold placeholder-white/30 focus:border-purple-500 focus:outline-none transition-colors"
                 />
               </div>
             </label>
           </div>
-        </div>
+        </Container>
       </section>
 
       {/* Donation Form */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-[#0f1528]">
-        <div className="max-w-4xl mx-auto">
+      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-[#0f1528]">
+        <Container className="max-w-4xl">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="bg-[#161b22] border-2 border-purple-500/30 rounded-3xl p-8 sm:p-12"
+            className="bg-[#161b22] border-2 border-purple-500/30 rounded-3xl p-6 sm:p-10"
           >
             <div className="text-center mb-8">
               <div className="text-5xl mb-4">🎁</div>
-              <h2 className="text-3xl font-bold text-white mb-2">
+              <h2 className="text-2xl sm:text-3xl font-bold text-white mb-2">
                 Complete Your Gift
               </h2>
-              <div className="text-4xl font-black text-purple-400 mb-2">
+              <div className="text-3xl sm:text-4xl font-black text-purple-400 mb-2">
                 ${displayAmount}
                 <span className="text-white/50 text-lg font-normal">
                   /{isMonthly ? "month" : "once"}
@@ -306,7 +309,7 @@ export default function DonatePage() {
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-6">
-              <div className="grid md:grid-cols-2 gap-6">
+              <div className="grid gap-4 md:grid-cols-2">
                 <label className="block">
                   <span className="text-white/70 text-sm font-semibold mb-2 block">
                     Your Name *
@@ -341,7 +344,7 @@ export default function DonatePage() {
                 <span className="text-white/70 text-sm font-semibold mb-3 block">
                   Payment Method *
                 </span>
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
                   {paymentMethods.map((method) => (
                     <button
                       key={method.id}
@@ -374,7 +377,7 @@ export default function DonatePage() {
                       className="w-full bg-white/5 border-2 border-white/10 rounded-xl px-4 py-3 text-white placeholder-white/30 focus:border-purple-500 focus:outline-none transition-colors"
                     />
                   </label>
-                  <div className="grid md:grid-cols-3 gap-4">
+                  <div className="grid gap-4 md:grid-cols-3">
                     <label className="block">
                       <span className="text-white/70 text-sm font-semibold mb-2 block">
                         Expiry
@@ -460,20 +463,20 @@ export default function DonatePage() {
               </p>
             </form>
           </motion.div>
-        </div>
+        </Container>
       </section>
 
       {/* Impact Allocation */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
-          <h2 className="text-3xl sm:text-4xl font-bold text-white text-center mb-4">
+      <section className="py-16 px-4 sm:px-6 lg:px-8">
+        <Container className="max-w-6xl">
+          <h2 className="text-2xl sm:text-4xl font-bold text-white text-center mb-4">
             Where Your Money Goes
           </h2>
-          <p className="text-white/60 text-center mb-12 max-w-2xl mx-auto">
+          <p className="text-white/60 text-center mb-10 max-w-2xl mx-auto text-sm sm:text-base">
             We believe in complete transparency. Here&apos;s exactly how we use
             your contribution.
           </p>
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {allocations.map((item, i) => (
               <motion.div
                 key={i}
@@ -481,7 +484,7 @@ export default function DonatePage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1 }}
-                className="text-center bg-white/5 border border-white/10 rounded-3xl p-8 hover:border-purple-500/50 transition-all"
+                className="text-center bg-white/5 border border-white/10 rounded-3xl p-6 sm:p-8 hover:border-purple-500/50 transition-all"
               >
                 <div className="text-6xl mb-4">{item.icon}</div>
                 <h3 className="text-xl font-bold text-white mb-3">
@@ -493,22 +496,22 @@ export default function DonatePage() {
               </motion.div>
             ))}
           </div>
-        </div>
+        </Container>
       </section>
 
       {/* Trust Signals */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-[#0f1528]">
-        <div className="max-w-5xl mx-auto">
+      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-[#0f1528]">
+        <Container className="max-w-5xl">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="bg-[#161b22] border-2 border-white/10 rounded-3xl p-12 text-center"
+            className="bg-[#161b22] border-2 border-white/10 rounded-3xl p-8 sm:p-12 text-center"
           >
-            <h2 className="text-2xl sm:text-3xl font-bold text-white mb-8">
+            <h2 className="text-2xl sm:text-3xl font-bold text-white mb-6 sm:mb-8">
               Your Donation is Safe & Secure
             </h2>
-            <div className="grid md:grid-cols-3 gap-8 text-white/70">
+            <div className="grid gap-6 sm:grid-cols-3 text-white/70 text-sm">
               {trust.map((t, i) => (
                 <div key={i}>
                   <div className="text-5xl mb-4">{t.icon}</div>
@@ -520,7 +523,7 @@ export default function DonatePage() {
               ))}
             </div>
           </motion.div>
-        </div>
+        </Container>
       </section>
     </div>
   );

@@ -52,7 +52,7 @@ export default function AnimatedBrand({
           transition={{ delay: 0.25, duration: 0.55, ease: "easeOut" }}
         >
           <span className="whitespace-nowrap">
-            <span className="text-amber-400">Haci</span>
+            <span style={{ color: "rgb(var(--brand-amber))" }}>Haci</span>
             <span className="text-white">Group</span>
           </span>
         </motion.div>

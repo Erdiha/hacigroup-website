@@ -2,6 +2,7 @@ import "./globals.css";
 import { Plus_Jakarta_Sans, Geist_Mono } from "next/font/google";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import ScrollManager from "@/components/ui/ScrollManager";
 
 const jakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
@@ -48,6 +49,7 @@ export default function RootLayout({ children }) {
         className={`${jakarta.variable} ${mono.variable} font-sans antialiased`}
       >
         <Header />
+        <ScrollManager />
         {children}
         <Footer />
       </body>

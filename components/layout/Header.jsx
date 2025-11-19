@@ -7,6 +7,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import AnimatedBrand from "@/components/ui/AnimatedBrand";
 import { navigation, siteMetadata } from "@/data/content";
 import Image from "next/image";
+import Container from "@/components/ui/Container";
 
 export default function Header() {
   const pathname = usePathname();
@@ -27,39 +28,46 @@ export default function Header() {
       : pathname === href || pathname.startsWith(href + "/");
 
   return (
-    <header className="sticky top-0 z-50 bg-[#0B1020]/90 backdrop-blur-md border-white/10">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+    <header className="sticky top-0 z-50 bg-primary/90 backdrop-blur-md border-b border-subtle">
+      <Container className="h-16 flex items-center justify-between">
         <div className="flex items-center  w-fit justify-center">
           <Link
             href="/"
             aria-label={siteMetadata?.name ?? "Home"}
             className="font-semibold tracking-tight text-xl flex items-center"
           >
-            <AnimatedBrand showLogo={true} />
+            <AnimatedBrand showLogo={false} />
           </Link>
         </div>
 
-        <nav className="hidden md:flex items-center gap-7 text-sm">
-          {navItems.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className={`relative transition-colors hover:text-white ${
-                isActive(item.href) ? "text-white" : "text-white/70"
-              }`}
-            >
-              {item.label}
-              {isActive(item.href) && (
-                <span className="absolute -bottom-1 left-0 right-0 h-[2px] bg-amber-500" />
-              )}
-            </Link>
-          ))}
-          {/* <Link
-            href="/donate"
-            className="inline-flex items-center rounded-lg px-4 py-2 bg-gradient-to-r from-purple-500 to-amber-500 text-white font-medium hover:shadow-lg hover:scale-105 transition-all"
-          >
-            Donate
-          </Link> */}
+        <nav className="hidden md:flex items-center gap-7 text-sm justify-center">
+          {navItems.map((item) => {
+            const active = isActive(item.href);
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={`group relative flex items-center justify-center transition-colors ${
+                  active ? "text-white" : "text-white/70 hover:text-white"
+                }`}
+              >
+                {item.label}
+                {!active && (
+                  <span
+                    aria-hidden="true"
+                    className="absolute -bottom-1 left-0 right-0 h-0.5 rounded-full bg-white/40 origin-center scale-x-0 group-hover:scale-x-100 group-focus-visible:scale-x-100 transition-transform duration-300"
+                  />
+                )}
+                {active && (
+                  <motion.span
+                    layoutId="nav-underline"
+                    className="absolute -bottom-1 left-0 right-0 h-0.5 rounded-full bg-gradient-to-r from-purple-500 via-amber-400 to-purple-500"
+                    transition={{ type: "spring", stiffness: 500, damping: 30 }}
+                  />
+                )}
+              </Link>
+            );
+          })}
         </nav>
 
         <button
@@ -85,7 +93,7 @@ export default function Header() {
             />
           </div>
         </button>
-      </div>
+      </Container>
 
       <AnimatePresence>
         {open && (

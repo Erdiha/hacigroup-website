@@ -25,7 +25,7 @@ export default function SiteFooter() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="relative bg-[#0B1020] border-t border-white/10">
+    <footer className="relative bg-primary border-t border-white/10">
       {/* Subtle background animation */}
       {!prefersReduced && (
         <motion.div
@@ -60,7 +60,7 @@ export default function SiteFooter() {
           <nav className="grid grid-cols-2 gap-8 text-sm">
             {/* Programs */}
             <div>
-              <p className="text-white/80 font-black uppercase tracking-wide mb-3 ">
+              <p className="text-secondary font-black uppercase tracking-wide mb-3 ">
                 Programs
               </p>
               <ul className="space-y-2">
@@ -68,7 +68,7 @@ export default function SiteFooter() {
                   <li key={item.href}>
                     <Link
                       href={item.href}
-                      className="text-white/80 hover:text-white transition-colors"
+                      className="text-secondary hover:text-white transition-colors"
                     >
                       {item.label}
                     </Link>
@@ -79,7 +79,7 @@ export default function SiteFooter() {
 
             {/* Organization */}
             <div>
-              <p className="text-white/80 font-black uppercase tracking-wide mb-3">
+              <p className="text-secondary font-black uppercase tracking-wide mb-3">
                 Organization
               </p>
               <ul className="space-y-2">
@@ -87,7 +87,7 @@ export default function SiteFooter() {
                   <li key={item.href}>
                     <Link
                       href={item.href}
-                      className="text-white/80 hover:text-white transition-colors"
+                      className="text-secondary hover:text-white transition-colors"
                     >
                       {item.label}
                     </Link>
@@ -101,7 +101,7 @@ export default function SiteFooter() {
           <form
             action="/subscribe"
             method="post"
-            className="bg-[#0f1528] border border-white/10 rounded-2xl p-4 sm:p-5"
+            className="bg-secondary border border-white/10 rounded-2xl p-4 sm:p-5"
           >
             <label
               htmlFor="email"
@@ -135,7 +135,7 @@ export default function SiteFooter() {
         </div>
 
         {/* ---------- BOTTOM BAR ---------- */}
-        <div className="mt-12 pt-8 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-4">
+        <div className="mt-12 pt-8 border-t border-subtle flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-white/50 text-xs">
             © {year} {siteMetadata.name} — Nonprofit technology for neighbors.
           </p>
