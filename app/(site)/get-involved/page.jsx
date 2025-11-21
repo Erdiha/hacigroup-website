@@ -17,6 +17,7 @@ import {
   ApplicationModal,
   VolunteerForm,
 } from "@/components/ui/ApplicationModal";
+import GetInvolvedBackground from "@/components/ui/GetInvolvedBackground";
 
 const safeTimestamp = (value) => {
   if (!value) return 0;
@@ -61,10 +62,13 @@ export default function GetInvolvedPage() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#0B1020]">
+    <div className="min-h-screen bg-[#0B1020] relative overflow-hidden">
       {/* Hero */}
-      <section className="relative py-20 sm:py-24 lg:py-32 px-4 sm:px-6 lg:px-8 overflow-hidden">
-        <div className="relative max-w-5xl mx-auto text-center">
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden py-20 sm:py-24 lg:py-32 px-4 sm:px-6 lg:px-8">
+        <GetInvolvedBackground />
+        {/* Dark overlay to make animation more subtle */}
+        <div className="absolute inset-0 bg-black/40 pointer-events-none" />
+        <div className="relative max-w-5xl mx-auto text-center z-10 px-4">
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -175,7 +179,7 @@ export default function GetInvolvedPage() {
                       <div className="flex flex-wrap gap-2">
                         {position.skills.map((skill, idx) => (
                           <span
-                            key={`${position.id}-${idx}`}
+                            key={position.id + '-' + idx}
                             className="text-xs px-2 py-1 bg-white/5 text-white/70 rounded-full border border-white/10"
                           >
                             {skill}
@@ -269,7 +273,7 @@ export default function GetInvolvedPage() {
           <div className="space-y-3 sm:space-y-4">
             {faqs.general.map((faq, i) => (
               <motion.div
-                key={`${faq.question}-${i}`}
+                key={faq.question + '-' + i}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}

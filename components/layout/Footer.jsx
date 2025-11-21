@@ -54,6 +54,14 @@ export default function SiteFooter() {
             <p className="mt-3 text-white/75 font-semibold leading-relaxed">
               {siteMetadata.description}
             </p>
+            <div className="mt-6">
+              <a
+                href="mailto:contact@hacigroup.org"
+                className="text-sm font-bold text-white/50 hover:text-amber-400 transition-colors"
+              >
+                contact@hacigroup.org
+              </a>
+            </div>
           </div>
 
           {/* ---------- NAVIGATION ---------- */}

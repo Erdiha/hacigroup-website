@@ -4,6 +4,8 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { donateContent } from "@/data/content";
 import Container from "@/components/ui/Container";
+import DonateBackground from "@/components/ui/DonateBackground";
+import Link from "next/link";
 
 export default function DonatePage() {
   const { hero, tiers, paymentMethods, allocations, trust } = donateContent;
@@ -20,6 +22,7 @@ export default function DonatePage() {
     anonymous: false,
   });
   const [isProcessing, setIsProcessing] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
 
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -48,16 +51,23 @@ export default function DonatePage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsProcessing(true);
-    await new Promise((r) => setTimeout(r, 1200));
+    // Simulate API call
+    await new Promise((r) => setTimeout(r, 1500));
+    
     console.log("Donation submitted:", {
       ...formData,
       frequency: isMonthly ? "monthly" : "one-time",
       paymentMethod,
     });
-    alert(
-      "Thank you for your donation! You'll receive a confirmation email shortly."
-    );
+    
     setIsProcessing(false);
+    setIsSuccess(true);
+    
+    // Scroll to top of form area
+    const formSection = document.getElementById("donation-form-section");
+    if (formSection) {
+      formSection.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
   };
 
   const selectedTierData = tiers.find((t) => t.id === selectedTier);
@@ -66,143 +76,99 @@ export default function DonatePage() {
     : selectedTierData?.amount;
 
   return (
-    <div className="min-h-screen bg-[#0B1020]">
+    <div className="min-h-screen bg-[#0B1020] text-white overflow-x-hidden">
       {/* Mission Banner */}
-      <section className="py-4 px-4">
+      <div className="bg-brand-purple/10 border-b border-white/5 py-3 px-4 backdrop-blur-sm sticky top-0 z-50">
         <Container>
-          <motion.div
-            className="text-center"
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-          >
-            <p className="text-white/80 text-xs sm:text-sm font-medium">
-              Supporting nonprofit technology platforms • 501(c)(3)
-              tax-deductible
-            </p>
-          </motion.div>
+          <p className="text-center text-white/90 text-xs sm:text-sm font-medium flex items-center justify-center gap-2">
+            <span className="text-brand-amber">★</span>
+            Supporting nonprofit technology platforms • 501(c)(3) tax-deductible
+          </p>
         </Container>
-      </section>
+      </div>
 
       {/* Hero */}
-      <section className="relative py-16 sm:py-20 px-4 overflow-hidden">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(139,92,246,0.15)_0%,transparent_50%)]" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_60%,rgba(245,158,11,0.12)_0%,transparent_50%)]" />
-        <Container className="relative max-w-4xl text-center">
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
-            className="text-3xl sm:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight"
-          >
-            Support Platform{" "}
-            <span className="bg-linear-to-r from-purple-400 via-amber-400 to-purple-400 bg-clip-text text-transparent">
-              Technology
-            </span>
-          </motion.h1>
-
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className="text-base sm:text-lg text-white/80 max-w-2xl mx-auto mb-6 leading-relaxed"
-          >
-            Your contribution funds the development and operation of NELA Ride
-            and The Handy Hack—nonprofit platforms that prioritize fair wages
-            for workers and affordable services for communities.
-          </motion.p>
-
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3 }}
-            className="text-sm sm:text-base text-white/60 max-w-xl mx-auto"
-          >
-            100% of donations support platform operations and development.
-            HaciGroup is a registered 501(c)(3) nonprofit organization.
-          </motion.p>
-        </Container>
-      </section>
-
-      {/* Why Donate Section */}
-      <section className="py-14 px-4 sm:px-6 lg:px-8 bg-[#0f1528]">
-        <Container className="max-w-5xl text-center">
+      <section className="relative min-h-[85vh] sm:min-h-screen flex items-center justify-center overflow-hidden py-12 ">
+        <DonateBackground />
+        
+        <Container className="relative z-10 max-w-4xl text-center px-4">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
           >
-            <h2 className="text-2xl sm:text-4xl font-bold text-white mb-4">
-              Why Your Support Matters
-            </h2>
-            <p className="text-base sm:text-lg text-white/80 leading-relaxed mb-8">
-              We&apos;re building something different: technology platforms that
-              serve people, not profits. Your donation directly funds the
-              development and operation of fair, transparent alternatives to
-              profit-first tech companies.
+            <h1 className="text-4xl sm:text-6xl lg:text-7xl font-black text-white mb-8 leading-tight">
+              Support Platform <br />
+              <span className="gradient-text">Technology</span>
+            </h1>
+
+            <p className="text-lg sm:text-xl text-white/70 max-w-2xl mx-auto mb-8 leading-relaxed">
+              Your contribution funds the development and operation of NELA Ride
+              and The Handy Hack—nonprofit platforms that prioritize fair wages
+              for workers and affordable services for communities.
             </p>
-            <div className="grid gap-4 sm:grid-cols-3">
-              <div className="bg-white/5 border border-white/10 rounded-2xl p-5 sm:p-6">
-                <div className="text-4xl mb-3">👥</div>
-                <h3 className="text-lg font-bold text-white mb-2">
-                  Community-Owned
-                </h3>
-                <p className="text-sm text-white/70">
-                  Built by and for the people who use it
-                </p>
-              </div>
-              <div className="bg-white/5 border border-white/10 rounded-2xl p-5 sm:p-6">
-                <div className="text-4xl mb-3">📊</div>
-                <h3 className="text-lg font-bold text-white mb-2">
-                  Fully Transparent
-                </h3>
-                <p className="text-sm text-white/70">
-                  See exactly where every dollar goes
-                </p>
-              </div>
-              <div className="bg-white/5 border border-white/10 rounded-2xl p-5 sm:p-6">
-                <div className="text-4xl mb-3">🌱</div>
-                <h3 className="text-lg font-bold text-white mb-2">
-                  Sustainable Growth
-                </h3>
-                <p className="text-sm text-white/70">
-                  No investor skim, just fair operations
-                </p>
-              </div>
+
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 backdrop-blur-md">
+              <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
+              <span className="text-sm font-medium text-white/80">100% funds operations & dev</span>
             </div>
           </motion.div>
         </Container>
       </section>
 
-      {/* Tiers */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8">
-        <Container className="max-w-6xl">
-          <h2 className="text-2xl sm:text-4xl font-bold text-white text-center mb-3">
-            Choose Your Impact Level
-          </h2>
-          <p className="text-white/60 text-center mb-10 max-w-2xl mx-auto text-sm sm:text-base">
-            Every contribution makes a difference. Pick an amount that works for
-            you, or create your own.
-          </p>
+      {/* Why Donate Section */}
+      <section className="py-20 px-4 sm:px-6 lg:px-8 relative">
+        <div className="absolute inset-0 bg-gradient-to-b from-[#0B1020] via-[#13182b] to-[#0B1020]" />
+        <Container className="relative z-10 max-w-6xl">
+          <div className="grid md:grid-cols-3 gap-6">
+            {[
+              { icon: "👥", title: "Community-Owned", desc: "Built by and for the people who use it" },
+              { icon: "📊", title: "Fully Transparent", desc: "See exactly where every dollar goes" },
+              { icon: "🌱", title: "Sustainable Growth", desc: "No investor skim, just fair operations" }
+            ].map((item, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1 }}
+                className="bg-white/5 border border-white/10 rounded-2xl p-8 hover:bg-white/10 transition-colors"
+              >
+                <div className="text-4xl mb-4">{item.icon}</div>
+                <h3 className="text-xl font-bold text-white mb-2">{item.title}</h3>
+                <p className="text-white/60">{item.desc}</p>
+              </motion.div>
+            ))}
+          </div>
+        </Container>
+      </section>
 
-          {/* Frequency Toggle */}
-          <div className="flex justify-center mb-10">
-            <div className="bg-white/5 border-2 border-white/10 rounded-2xl p-1 flex gap-1">
+      {/* Tiers */}
+      <section className="py-16 px-4 sm:px-6 lg:px-8" id="donation-options">
+        <Container className="max-w-7xl">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">
+              Choose Your Impact Level
+            </h2>
+            
+            {/* Frequency Toggle */}
+            <div className="inline-flex bg-white/5 border border-white/10 rounded-xl p-1 gap-1 mt-6">
               <button
                 onClick={() => setIsMonthly(true)}
-                className={`px-6 py-2 rounded-xl text-sm sm:text-base font-semibold transition-all ${
+                className={`px-6 py-2.5 rounded-lg text-sm font-bold transition-all ${
                   isMonthly
-                    ? "bg-linear-to-r from-purple-500 to-amber-500 text-white shadow-lg"
-                    : "text-white/60 hover:text-white"
+                    ? "bg-brand-purple text-white shadow-lg shadow-brand-purple/25"
+                    : "text-white/60 hover:text-white hover:bg-white/5"
                 }`}
               >
                 Monthly
               </button>
               <button
                 onClick={() => setIsMonthly(false)}
-                className={`px-6 py-2 rounded-xl text-sm sm:text-base font-semibold transition-all ${
+                className={`px-6 py-2.5 rounded-lg text-sm font-bold transition-all ${
                   !isMonthly
-                    ? "bg-linear-to-r from-purple-500 to-amber-500 text-white shadow-lg"
-                    : "text-white/60 hover:text-white"
+                    ? "bg-brand-purple text-white shadow-lg shadow-brand-purple/25"
+                    : "text-white/60 hover:text-white hover:bg-white/5"
                 }`}
               >
                 One-Time
@@ -210,7 +176,7 @@ export default function DonatePage() {
             </div>
           </div>
 
-          <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-4 mb-10">
+          <div className="grid gap-6 sm:grid-cols-2 xl:grid-cols-4 mb-12">
             {tiers.map((tier, i) => (
               <motion.button
                 key={tier.id}
@@ -219,264 +185,271 @@ export default function DonatePage() {
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1 }}
                 onClick={() => handleTierSelect(tier.id)}
-                className={`text-left bg-[#161b22] border-2 rounded-3xl p-5 sm:p-6 transition-all ${
+                className={`relative text-left h-full flex flex-col bg-[#161b22] border-2 rounded-3xl p-6 transition-all duration-300 group ${
                   selectedTier === tier.id
-                    ? "border-purple-500 shadow-lg shadow-purple-500/25 ring-2 ring-purple-500/40 scale-[1.01]"
-                    : "border-white/10 hover:border-purple-500/50"
-                } ${tier.popular ? "ring-2 ring-amber-400" : ""} focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-500`}
+                    ? "border-brand-purple shadow-xl shadow-brand-purple/20 scale-[1.02] z-10"
+                    : "border-white/5 hover:border-white/20 hover:bg-white/5"
+                }`}
               >
                 {tier.popular && (
-                  <div className="inline-flex items-center gap-1 bg-amber-400 text-black text-xs font-bold px-3 py-1 rounded-full mb-4">
-                    <span>⭐</span>
-                    <span>MOST POPULAR</span>
+                  <div className="absolute top-4 right-4 bg-brand-amber text-white text-[10px] font-white uppercase tracking-wider px-2 py-1.5 rounded-full shadow-lg shadow-amber-500/20 pointer-events-none">
+                    Most Popular
                   </div>
                 )}
-                <div className="text-4xl mb-3">{tier.icon}</div>
+                
+                <div className="text-4xl mb-4 group-hover:scale-110 transition-transform duration-300">{tier.icon}</div>
                 <h3 className="text-lg font-bold text-white mb-1">
                   {tier.title}
                 </h3>
-                <div className="text-2xl sm:text-3xl font-black text-purple-400 mb-2">
+                <div className="text-3xl font-black text-white mb-2">
                   ${tier.amount}
-                  <span className="text-white/50 text-sm font-normal">
+                  <span className="text-white/40 text-sm font-medium ml-1">
                     /{isMonthly ? "mo" : "once"}
                   </span>
                 </div>
-                <p className="text-white/70 text-sm mb-4">
+                <p className="text-white/60 text-sm mb-6 leading-relaxed min-h-[40px]">
                   {tier.description}
                 </p>
-                <ul className="space-y-1.5">
-                  {tier.benefits.map((b, j) => (
-                    <li
-                      key={j}
-                      className="flex items-start gap-2 text-white/60 text-sm"
-                    >
-                      <span className="text-purple-400 mt-0.5">✓</span>
-                      <span>{b}</span>
-                    </li>
-                  ))}
-                </ul>
+                
+                <div className="mt-auto pt-6 border-t border-white/5">
+                  <ul className="space-y-3">
+                    {tier.benefits.map((b, j) => (
+                      <li key={j} className="flex items-start gap-3 text-white/70 text-xs font-medium">
+                        <span className="text-brand-green mt-0.5">✓</span>
+                        <span>{b}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               </motion.button>
             ))}
           </div>
 
           {/* Custom Amount */}
           <div className="max-w-md mx-auto">
-            <label className="block text-center">
-              <span className="text-white/70 text-sm font-semibold mb-3 block">
-                Or choose your own amount
-              </span>
-              <div className="relative">
-                <span className="absolute left-4 top-1/2 -translate-y-1/2 text-white/50 text-xl font-bold">
-                  $
-                </span>
+            <div className="relative group">
+              <div className="absolute inset-0 bg-brand-purple/20 blur-xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity" />
+              <div className="relative bg-[#161b22] border border-white/10 rounded-2xl p-2 flex items-center">
+                <div className="px-4 text-white/40 font-bold">$</div>
                 <input
                   type="number"
                   value={customAmount}
                   onChange={handleCustomAmount}
-                  placeholder="Any amount helps"
-                  className="w-full bg-white/5 border-2 border-white/10 rounded-2xl px-12 py-3 text-white text-center text-lg sm:text-xl font-bold placeholder-white/30 focus:border-purple-500 focus:outline-none transition-colors"
+                  placeholder="Enter custom amount"
+                  className="w-full bg-transparent border-none text-white font-bold placeholder-white/20 focus:ring-0 text-lg"
                 />
               </div>
-            </label>
+            </div>
           </div>
         </Container>
       </section>
 
-      {/* Donation Form */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-[#0f1528]">
-        <Container className="max-w-4xl">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="bg-[#161b22] border-2 border-purple-500/30 rounded-3xl p-6 sm:p-10"
-          >
-            <div className="text-center mb-8">
-              <div className="text-5xl mb-4">🎁</div>
-              <h2 className="text-2xl sm:text-3xl font-bold text-white mb-2">
+      {/* Donation Form Section */}
+      <section id="donation-form-section" className="py-20 px-4 sm:px-6 lg:px-8 bg-[#0f1528] relative overflow-hidden">
+        {/* Background decorative elements */}
+        <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+        
+        <Container className="max-w-3xl relative z-10">
+          <AnimatePresence mode="wait">
+            {isSuccess ? (
+              <motion.div
+                key="success"
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                className="bg-[#161b22] border border-brand-green/30 rounded-3xl p-8 sm:p-12 text-center shadow-2xl shadow-brand-green/10"
+              >
+                <div className="w-20 h-20 bg-brand-green/20 rounded-full flex items-center justify-center mx-auto mb-6">
+                  <span className="text-4xl">🎉</span>
+                </div>
+                <h2 className="text-3xl sm:text-4xl font-black text-white mb-4">
+                  Thank You, {formData.name.split(' ')[0]}!
+                </h2>
+                <p className="text-lg text-white/70 mb-8 max-w-lg mx-auto">
+                  Your donation of <strong className="text-white">${displayAmount}</strong> has been received. 
+                  You are helping us build a fairer future for everyone.
+                </p>
+                <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                  <Link 
+                    href="/"
+                    className="px-8 py-3 rounded-xl bg-white/5 border border-white/10 text-white font-bold hover:bg-white/10 transition-colors"
+                  >
+                    Return Home
+                  </Link>
+                  <button 
+                    onClick={() => {
+                      setIsSuccess(false);
+                      setFormData(prev => ({ ...prev, amount: 50, message: "" }));
+                      setSelectedTier("sustainer");
+                    }}
+                    className="px-8 py-3 rounded-xl bg-brand-purple text-white font-bold hover:bg-brand-purple/90 transition-colors"
+                  >
+                    Make Another Donation
+                  </button>
+                </div>
+              </motion.div>
+            ) : (
+              <motion.div
+                key="form"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                className="bg-[#161b22] border border-white/10 rounded-3xl p-5 sm:p-10 shadow-2xl"
+              >
+                <div className="text-center mb-8 sm:mb-10">
+              <h2 className="text-xl sm:text-3xl font-bold text-white mb-2">
                 Complete Your Gift
               </h2>
-              <div className="text-3xl sm:text-4xl font-black text-purple-400 mb-2">
-                ${displayAmount}
-                <span className="text-white/50 text-lg font-normal">
-                  /{isMonthly ? "month" : "once"}
+              <div className="flex items-baseline justify-center gap-1 sm:gap-2 text-3xl sm:text-5xl font-black text-white mb-2">
+                <span className="text-brand-purple">$</span>
+                {displayAmount}
+                <span className="text-white/40 text-sm sm:text-lg font-medium">
+                  /{isMonthly ? "mo" : "once"}
                 </span>
               </div>
-              <p className="text-white/70">
-                {selectedTierData?.description ||
-                  "Your contribution supports our mission"}
-              </p>
             </div>
 
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <div className="grid gap-4 md:grid-cols-2">
-                <label className="block">
-                  <span className="text-white/70 text-sm font-semibold mb-2 block">
-                    Your Name *
-                  </span>
-                  <input
-                    type="text"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleInputChange}
-                    required
-                    placeholder="John Smith"
-                    className="w-full bg-white/5 border-2 border-white/10 rounded-xl px-4 py-3 text-white placeholder-white/30 focus:border-purple-500 focus:outline-none transition-colors"
-                  />
-                </label>
-                <label className="block">
-                  <span className="text-white/70 text-sm font-semibold mb-2 block">
-                    Email Address *
-                  </span>
-                  <input
-                    type="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleInputChange}
-                    required
-                    placeholder="john@example.com"
-                    className="w-full bg-white/5 border-2 border-white/10 rounded-xl px-4 py-3 text-white placeholder-white/30 focus:border-purple-500 focus:outline-none transition-colors"
-                  />
-                </label>
-              </div>
+                <form onSubmit={handleSubmit} className="space-y-6">
+                  <div className="grid gap-6 md:grid-cols-2">
+                    <label className="block space-y-2">
+                      <span className="text-white/60 text-xs font-bold uppercase tracking-wider">
+                        Full Name
+                      </span>
+                      <input
+                        type="text"
+                        name="name"
+                        value={formData.name}
+                        onChange={handleInputChange}
+                        required
+                        placeholder="Jane Doe"
+                        className="w-full bg-[#0B1020] border border-white/10 rounded-xl px-4 py-3 text-white placeholder-white/20 focus:border-brand-purple focus:ring-1 focus:ring-brand-purple focus:outline-none transition-all"
+                      />
+                    </label>
+                    <label className="block space-y-2">
+                      <span className="text-white/60 text-xs font-bold uppercase tracking-wider">
+                        Email Address
+                      </span>
+                      <input
+                        type="email"
+                        name="email"
+                        value={formData.email}
+                        onChange={handleInputChange}
+                        required
+                        placeholder="jane@example.com"
+                        className="w-full bg-[#0B1020] border border-white/10 rounded-xl px-4 py-3 text-white placeholder-white/20 focus:border-brand-purple focus:ring-1 focus:ring-brand-purple focus:outline-none transition-all"
+                      />
+                    </label>
+                  </div>
 
-              <div>
-                <span className="text-white/70 text-sm font-semibold mb-3 block">
-                  Payment Method *
-                </span>
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
-                  {paymentMethods.map((method) => (
-                    <button
-                      key={method.id}
-                      type="button"
-                      onClick={() => setPaymentMethod(method.id)}
-                      className={`p-4 rounded-xl border-2 transition-all ${
-                        paymentMethod === method.id
-                          ? "border-purple-500 bg-purple-500/10"
-                          : "border-white/10 bg-white/5 hover:border-purple-500/50"
-                      }`}
-                    >
-                      <div className="text-2xl mb-2">{method.icon}</div>
-                      <div className="text-white text-sm font-semibold">
-                        {method.name}
-                      </div>
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              {paymentMethod === "card" && (
-                <div className="space-y-4">
-                  <label className="block">
-                    <span className="text-white/70 text-sm font-semibold mb-2 block">
-                      Card Number
+                  <div className="space-y-3">
+                    <span className="text-white/60 text-xs font-bold uppercase tracking-wider block">
+                      Payment Method
                     </span>
-                    <input
-                      type="text"
-                      placeholder="1234 5678 9012 3456"
-                      className="w-full bg-white/5 border-2 border-white/10 rounded-xl px-4 py-3 text-white placeholder-white/30 focus:border-purple-500 focus:outline-none transition-colors"
+                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                      {paymentMethods.map((method) => (
+                        <button
+                          key={method.id}
+                          type="button"
+                          onClick={() => setPaymentMethod(method.id)}
+                          className={`p-3 rounded-xl border transition-all flex flex-col items-center gap-2 ${
+                            paymentMethod === method.id
+                              ? "border-brand-purple bg-brand-purple/10 text-white"
+                              : "border-white/10 bg-[#0B1020] text-white/50 hover:border-white/20 hover:text-white"
+                          }`}
+                        >
+                          <span className="text-xl">{method.icon}</span>
+                          <span className="text-xs font-bold">{method.name}</span>
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  {paymentMethod === "card" && (
+                    <div className="p-4 rounded-xl bg-[#0B1020] border border-white/5 space-y-4">
+                      <div className="space-y-2">
+                        <span className="text-white/40 text-[10px] font-bold uppercase tracking-wider">Card Details</span>
+                        <input
+                          type="text"
+                          placeholder="0000 0000 0000 0000"
+                          className="w-full bg-transparent border-b border-white/10 px-0 py-2 text-white placeholder-white/20 focus:border-brand-purple focus:ring-0 focus:outline-none transition-colors font-mono"
+                        />
+                      </div>
+                      <div className="grid grid-cols-3 gap-4">
+                        <input
+                          type="text"
+                          placeholder="MM/YY"
+                          className="w-full bg-transparent border-b border-white/10 px-0 py-2 text-white placeholder-white/20 focus:border-brand-purple focus:ring-0 focus:outline-none transition-colors font-mono text-center"
+                        />
+                        <input
+                          type="text"
+                          placeholder="CVC"
+                          className="w-full bg-transparent border-b border-white/10 px-0 py-2 text-white placeholder-white/20 focus:border-brand-purple focus:ring-0 focus:outline-none transition-colors font-mono text-center"
+                        />
+                        <input
+                          type="text"
+                          placeholder="ZIP"
+                          className="w-full bg-transparent border-b border-white/10 px-0 py-2 text-white placeholder-white/20 focus:border-brand-purple focus:ring-0 focus:outline-none transition-colors font-mono text-center"
+                        />
+                      </div>
+                    </div>
+                  )}
+
+                  <label className="block space-y-2">
+                    <span className="text-white/60 text-xs font-bold uppercase tracking-wider">
+                      Message (Optional)
+                    </span>
+                    <textarea
+                      name="message"
+                      value={formData.message}
+                      onChange={handleInputChange}
+                      rows={3}
+                      placeholder="Why are you supporting us?"
+                      className="w-full bg-[#0B1020] border border-white/10 rounded-xl px-4 py-3 text-white placeholder-white/20 focus:border-brand-purple focus:ring-1 focus:ring-brand-purple focus:outline-none resize-none transition-all"
                     />
                   </label>
-                  <div className="grid gap-4 md:grid-cols-3">
-                    <label className="block">
-                      <span className="text-white/70 text-sm font-semibold mb-2 block">
-                        Expiry
-                      </span>
-                      <input
-                        type="text"
-                        placeholder="MM/YY"
-                        className="w-full bg-white/5 border-2 border-white/10 rounded-xl px-4 py-3 text-white placeholder-white/30 focus:border-purple-500 focus:outline-none transition-colors"
-                      />
-                    </label>
-                    <label className="block">
-                      <span className="text-white/70 text-sm font-semibold mb-2 block">
-                        CVC
-                      </span>
-                      <input
-                        type="text"
-                        placeholder="123"
-                        className="w-full bg-white/5 border-2 border-white/10 rounded-xl px-4 py-3 text-white placeholder-white/30 focus:border-purple-500 focus:outline-none transition-colors"
-                      />
-                    </label>
-                    <label className="block">
-                      <span className="text-white/70 text-sm font-semibold mb-2 block">
-                        ZIP
-                      </span>
-                      <input
-                        type="text"
-                        placeholder="12345"
-                        className="w-full bg-white/5 border-2 border-white/10 rounded-xl px-4 py-3 text-white placeholder-white/30 focus:border-purple-500 focus:outline-none transition-colors"
-                      />
-                    </label>
+
+                  <div className="pt-2">
+                    <button
+                      type="submit"
+                      disabled={isProcessing || !formData.name || !formData.email}
+                      className={`w-full py-4 rounded-xl font-bold text-lg transition-all shadow-lg ${
+                        isProcessing || !formData.name || !formData.email
+                          ? "bg-white/10 text-white/30 cursor-not-allowed"
+                          : "bg-gradient-to-r from-brand-purple to-brand-amber text-white hover:shadow-brand-purple/25 hover:scale-[1.01] active:scale-[0.99]"
+                      }`}
+                    >
+                      {isProcessing ? (
+                        <span className="flex items-center justify-center gap-2">
+                          <span className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                          Processing...
+                        </span>
+                      ) : (
+                        `Donate $${displayAmount}`
+                      )}
+                    </button>
+                    <p className="text-center text-white/30 text-xs mt-4 flex items-center justify-center gap-1">
+                      <span>🔒</span> 256-bit SSL Encrypted Payment
+                    </p>
                   </div>
-                </div>
-              )}
-
-              <label className="block">
-                <span className="text-white/70 text-sm font-semibold mb-2 block">
-                  Leave a Message (Optional)
-                </span>
-                <textarea
-                  name="message"
-                  value={formData.message}
-                  onChange={handleInputChange}
-                  rows={3}
-                  placeholder="Share why you're supporting our mission..."
-                  className="w-full bg-white/5 border-2 border-white/10 rounded-xl px-4 py-3 text-white placeholder-white/30 focus:border-purple-500 focus:outline-none resize-none transition-colors"
-                />
-              </label>
-
-              <label className="flex items-center gap-3 cursor-pointer">
-                <input
-                  type="checkbox"
-                  name="anonymous"
-                  checked={formData.anonymous}
-                  onChange={handleInputChange}
-                  className="w-5 h-5 text-purple-500 bg-white/5 border-2 border-white/10 rounded focus:ring-purple-500 focus:ring-2"
-                />
-                <span className="text-white/70 text-sm">
-                  Make this donation anonymous
-                </span>
-              </label>
-
-              <button
-                type="submit"
-                disabled={isProcessing || !formData.name || !formData.email}
-                className={`w-full py-5 font-bold text-lg rounded-2xl transition-all ${
-                  isProcessing || !formData.name || !formData.email
-                    ? "bg-gray-500 text-gray-300 cursor-not-allowed"
-                    : "bg-linear-to-r from-purple-500 via-amber-500 to-purple-500 text-white hover:shadow-lg hover:shadow-purple-500/50 hover:scale-[1.02] active:scale-[0.98]"
-                }`}
-              >
-                {isProcessing ? (
-                  <div className="flex items-center justify-center gap-2">
-                    <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                    Processing...
-                  </div>
-                ) : (
-                  `Donate $${displayAmount} ${isMonthly ? "Monthly" : "Today"}`
-                )}
-              </button>
-
-              <p className="text-center text-white/50 text-sm">
-                🔒 Secure & encrypted • Tax-deductible • 501(c)(3) nonprofit
-              </p>
-            </form>
-          </motion.div>
+                </form>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </Container>
       </section>
 
       {/* Impact Allocation */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8">
+      <section className="py-20 px-4 sm:px-6 lg:px-8">
         <Container className="max-w-6xl">
-          <h2 className="text-2xl sm:text-4xl font-bold text-white text-center mb-4">
-            Where Your Money Goes
-          </h2>
-          <p className="text-white/60 text-center mb-10 max-w-2xl mx-auto text-sm sm:text-base">
-            We believe in complete transparency. Here&apos;s exactly how we use
-            your contribution.
-          </p>
-          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="text-center mb-12">
+            <h2 className="text-2xl sm:text-3xl font-bold text-white mb-4">
+              Where Your Money Goes
+            </h2>
+            <p className="text-white/60 max-w-2xl mx-auto">
+              We believe in radical transparency. Here is exactly how we use your contribution.
+            </p>
+          </div>
+          
+          <div className="grid gap-6 sm:grid-cols-3">
             {allocations.map((item, i) => (
               <motion.div
                 key={i}
@@ -484,13 +457,15 @@ export default function DonatePage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1 }}
-                className="text-center bg-white/5 border border-white/10 rounded-3xl p-6 sm:p-8 hover:border-purple-500/50 transition-all"
+                className="text-center p-6"
               >
-                <div className="text-6xl mb-4">{item.icon}</div>
-                <h3 className="text-xl font-bold text-white mb-3">
+                <div className="w-16 h-16 mx-auto bg-white/5 rounded-2xl flex items-center justify-center text-3xl mb-4 border border-white/10">
+                  {item.icon}
+                </div>
+                <h3 className="text-lg font-bold text-white mb-2">
                   {item.title}
                 </h3>
-                <p className="text-white/70 text-sm leading-relaxed">
+                <p className="text-white/50 text-sm leading-relaxed">
                   {item.desc}
                 </p>
               </motion.div>
@@ -498,33 +473,7 @@ export default function DonatePage() {
           </div>
         </Container>
       </section>
-
-      {/* Trust Signals */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-[#0f1528]">
-        <Container className="max-w-5xl">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="bg-[#161b22] border-2 border-white/10 rounded-3xl p-8 sm:p-12 text-center"
-          >
-            <h2 className="text-2xl sm:text-3xl font-bold text-white mb-6 sm:mb-8">
-              Your Donation is Safe & Secure
-            </h2>
-            <div className="grid gap-6 sm:grid-cols-3 text-white/70 text-sm">
-              {trust.map((t, i) => (
-                <div key={i}>
-                  <div className="text-5xl mb-4">{t.icon}</div>
-                  <h3 className="font-bold text-white mb-2 text-lg">
-                    {t.title}
-                  </h3>
-                  <p className="text-sm leading-relaxed">{t.text}</p>
-                </div>
-              ))}
-            </div>
-          </motion.div>
-        </Container>
-      </section>
     </div>
   );
 }
+

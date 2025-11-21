@@ -89,7 +89,7 @@ export default function ContactPage() {
           </p>
         </motion.div>
 
-        <div className="flex">
+        <div className="grid lg:grid-cols-3 gap-8 w-full">
           {/* Form */}
           <motion.div
             initial={prefersReduced ? false : { opacity: 0, y: 16 }}
@@ -196,63 +196,63 @@ export default function ContactPage() {
           </motion.div>
 
           {/* Sidebar: direct info */}
-          {/* <motion.aside
+          <motion.div
             initial={prefersReduced ? false : { opacity: 0, y: 16 }}
             animate={prefersReduced ? {} : { opacity: 1, y: 0 }}
             transition={{ duration: 0.45, delay: 0.1 }}
-            className="bg-[#0f1528] border border-white/10 rounded-2xl p-6 sm:p-8"
+            className="lg:col-span-1 bg-[#0f1528] border border-white/10 rounded-2xl p-6 sm:p-8 h-fit"
           >
             <h2 className="text-white text-xl font-black uppercase mb-4">
               Reach Us
             </h2>
-            <ul className="space-y-3 text-white/80">
+            <ul className="space-y-4 text-white/80 text-sm">
               <li>
-                <span className="text-white/50">Email:</span>{" "}
-                <a href="mailto:hello@haci.group" className="hover:underline">
-                  hello@haci.group
-                </a>
-              </li>
-              <li>
-                <span className="text-white/50">Press:</span>{" "}
-                <a href="mailto:press@haci.group" className="hover:underline">
-                  press@haci.group
-                </a>
-              </li>
-              <li>
-                <span className="text-white/50">Partnerships:</span>{" "}
+                <span className="block text-white/50 text-xs uppercase font-bold mb-1">
+                  General Inquiries
+                </span>
                 <a
-                  href="mailto:partners@haci.group"
-                  className="hover:underline"
+                  href="mailto:contact@hacigroup.org"
+                  className="hover:text-amber-400 transition-colors"
                 >
-                  partners@haci.group
+                  contact@hacigroup.org
+                </a>
+              </li>
+              <li>
+                <span className="block text-white/50 text-xs uppercase font-bold mb-1">
+                  Media & Press
+                </span>
+                <a
+                  href="mailto:media@hacigroup.org"
+                  className="hover:text-amber-400 transition-colors"
+                >
+                  media@hacigroup.org
+                </a>
+              </li>
+              <li>
+                <span className="block text-white/50 text-xs uppercase font-bold mb-1">
+                  Partnerships
+                </span>
+                <a
+                  href="mailto:partnerships@hacigroup.org"
+                  className="hover:text-amber-400 transition-colors"
+                >
+                  partnerships@hacigroup.org
+                </a>
+              </li>
+              <li>
+                <span className="block text-white/50 text-xs uppercase font-bold mb-1">
+                  Support
+                </span>
+                <a
+                  href="mailto:support@hacigroup.org"
+                  className="hover:text-amber-400 transition-colors"
+                >
+                  support@hacigroup.org
                 </a>
               </li>
             </ul>
 
-            <div className="mt-6">
-              <h3 className="text-white text-sm font-bold uppercase mb-2">
-                Mailing Address
-              </h3>
-              <p className="text-white/60 text-sm leading-relaxed">
-                HaciGroup
-                <br /> PO Box 0000
-                <br /> Los Angeles, CA 90000
-              </p>
-            </div>
-
-            <div className="mt-6">
-              <h3 className="text-white text-sm font-bold uppercase mb-2">
-                Media Kit
-              </h3>
-              <Link
-                href="/media-kit"
-                className="inline-flex items-center gap-2 text-amber-400 font-semibold hover:underline"
-              >
-                View assets →
-              </Link>
-            </div>
-
-            <div className="mt-6">
+            <div className="mt-8 pt-6 border-t border-white/10">
               <h3 className="text-white text-sm font-bold uppercase mb-2">
                 Follow
               </h3>
@@ -261,7 +261,7 @@ export default function ContactPage() {
                   href="https://twitter.com/"
                   target="_blank"
                   rel="noreferrer"
-                  className="hover:text-white"
+                  className="hover:text-white transition-colors"
                 >
                   X
                 </a>
@@ -269,7 +269,7 @@ export default function ContactPage() {
                   href="https://instagram.com/"
                   target="_blank"
                   rel="noreferrer"
-                  className="hover:text-white"
+                  className="hover:text-white transition-colors"
                 >
                   IG
                 </a>
@@ -277,13 +277,13 @@ export default function ContactPage() {
                   href="https://linkedin.com/"
                   target="_blank"
                   rel="noreferrer"
-                  className="hover:text-white"
+                  className="hover:text-white transition-colors"
                 >
                   LinkedIn
                 </a>
               </div>
             </div>
-          </motion.aside> */}
+          </motion.div>
         </div>
       </section>
     </main>

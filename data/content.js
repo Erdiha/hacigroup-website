@@ -20,7 +20,7 @@ export const navigation = {
   ],
   footer: {
     programs: [
-      { href: "https://nelaride.org", label: "NELA Ride" },
+      { href: "https://nelaride.com", label: "NELA Ride" },
       { href: "#", label: "Handy Hack" },
     ],
     organization: [
@@ -48,7 +48,7 @@ export const programs = [
     description:
       "A nonprofit rideshare platform where drivers earn 90% of fares and riders save 20% compared to traditional platforms.",
     color: "from-purple-400/20 to-purple-500/10",
-    href: "https://nelaride.org",
+    href: "https://nelaride.com",
     comingSoon: false,
     status: "Live in Northeast LA",
   },

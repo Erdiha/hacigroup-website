@@ -8,6 +8,8 @@ import SectionTitle from "@/components/ui/SectionTitle";
 import { homepage, programs } from "@/data/content";
 import Section from "@/components/ui/Section";
 
+import HeroBackground from "@/components/ui/HeroBackground";
+
 // ==========================================
 // UTILITY HOOKS
 // ==========================================
@@ -34,22 +36,20 @@ function HeroSection() {
   return (
     <Section
       variant="primary"
-      className="relative min-h-screen flex items-center overflow-hidden"
+      className="relative min-h-screen flex items-center justify-center overflow-hidden"
     >
       {/* Background effects */}
       <div className="absolute inset-0 radial-purple" />
       <div className="absolute inset-0 radial-amber" />
-      {!prefersReduced && (
-        <div className="absolute inset-0 animated-grid" aria-hidden="true" />
-      )}
+      {!prefersReduced && <HeroBackground />}
 
-      <Container className="relative z-10 w-full pt-16 pb-16">
+      <Container className="relative z-10 w-full text-center">
         {/* Badge */}
         <motion.div
           initial={prefersReduced ? false : { opacity: 0, scale: 0.95 }}
           animate={prefersReduced ? {} : { opacity: 1, scale: 1 }}
           transition={{ duration: 0.5, delay: 0.2 }}
-          className="text-center mb-10 md:mb-14"
+          className="mb-6 md:mb-14"
         >
           {/* <div className="inline-flex items-center gap-2 rounded-full border border-subtle bg-white/5 px-4 py-2 backdrop-blur-sm mb-8">
             <span className="h-2 w-2 rounded-full bg-green-400 animate-pulse" />
@@ -57,7 +57,7 @@ function HeroSection() {
           </div> */}
 
           {/* Title */}
-          <h1 className="text-3xl sm:text-5xl lg:text-7xl font-black text-primary uppercase leading-tight mb-6 sm:mb-8">
+          <h1 className="text-3xl sm:text-5xl lg:text-7xl font-black text-primary uppercase leading-tight mb-4 sm:mb-8">
             <motion.span
               initial={prefersReduced ? false : { opacity: 0, y: 20 }}
               animate={prefersReduced ? {} : { opacity: 1, y: 0 }}
@@ -82,66 +82,218 @@ function HeroSection() {
             initial={prefersReduced ? false : { opacity: 0, y: 20 }}
             animate={prefersReduced ? {} : { opacity: 1, y: 0 }}
             transition={{ delay: 0.6 }}
-            className="text-sm sm:text-lg lg:text-xl text-secondary font-medium max-w-4xl mx-auto mb-8 sm:mb-10"
+            className="text-sm sm:text-lg lg:text-xl text-secondary font-medium max-w-4xl mx-auto mb-8 sm:mb-12"
           >
             {hero.subtitle}
           </motion.p>
-        </motion.div>
 
-        {/* Visual Flow */}
+          {/* CTA & Scroll Indicator */}
+          <motion.div
+            initial={prefersReduced ? false : { opacity: 0, y: 20 }}
+            animate={prefersReduced ? {} : { opacity: 1, y: 0 }}
+            transition={{ delay: 0.8 }}
+            className="flex flex-col items-center gap-8"
+          >
+            <Link
+              href="#visual-flow"
+              className="btn-gradient inline-flex items-center text-lg px-8 py-4"
+            >
+              See How It Works
+              <svg
+                className="w-5 h-5 ml-2"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M19 14l-7 7m0 0l-7-7m7 7V3"
+                />
+              </svg>
+            </Link>
+
+            <motion.div
+              animate={{ y: [0, 10, 0] }}
+              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+              className="text-muted text-sm font-medium uppercase tracking-widest mt-8"
+            >
+              Scroll to Explore
+              <div className="w-px h-12 bg-gradient-to-b from-muted/0 via-muted/50 to-muted/0 mx-auto mt-2" />
+            </motion.div>
+          </motion.div>
+        </motion.div>
+      </Container>
+    </Section>
+  );
+}
+
+// ==========================================
+// VISUAL FLOW SECTION
+// ==========================================
+function VisualFlowSection() {
+  const prefersReduced = usePrefersReducedMotion();
+
+  return (
+    <Section
+      id="visual-flow"
+      variant="secondary"
+      className="relative min-h-screen flex items-center justify-center"
+    >
+      <Container className="w-full">
         <motion.div
           initial={prefersReduced ? false : { opacity: 0, y: 30 }}
-          animate={prefersReduced ? {} : { opacity: 1, y: 0 }}
-          transition={{ delay: 0.8 }}
+          whileInView={prefersReduced ? {} : { opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ delay: 0.2 }}
           className="max-w-5xl mx-auto"
         >
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-8">
+          <div className="text-center mb-12 md:mb-16">
+            <h2 className="text-2xl md:text-4xl font-black text-primary uppercase mb-4">
+              The Ecosystem
+            </h2>
+            <p className="text-secondary text-lg">
+              How money moves in our platform
+            </p>
+          </div>
+
+          <div className="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-6">
             {/* Rider */}
             <motion.div
-              initial={prefersReduced ? false : { opacity: 0, x: -30 }}
-              animate={prefersReduced ? {} : { opacity: 1, x: 0 }}
-              transition={{ delay: 1 }}
-              className="card border-2 md:border-4 border-amber-400/50 text-center p-4 md:p-6"
+              initial={prefersReduced ? false : { opacity: 0, x: -20 }}
+              whileInView={prefersReduced ? {} : { opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.4, duration: 0.4 }}
+              className="w-full md:w-1/3 card border-2 md:border-4 border-amber-400/50 text-center p-6"
             >
-              <div className="text-4xl md:text-6xl mb-3">🚶</div>
-              <h3 className="text-lg md:text-2xl font-black text-primary uppercase mb-2">
+              <div className="text-5xl md:text-6xl mb-4">🚶</div>
+              <h3 className="text-xl md:text-2xl font-black text-primary uppercase mb-2">
                 Riders
               </h3>
-              <p className="text-sm md:text-base text-secondary">
-                Pay 20% less
-              </p>
+              <p className="text-base text-secondary">Pay 20% less</p>
+            </motion.div>
+
+            {/* Arrow 1 */}
+            <motion.div
+              initial={prefersReduced ? false : { opacity: 0, scale: 0.5 }}
+              whileInView={prefersReduced ? {} : { opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.6, duration: 0.3 }}
+              className="hidden md:block text-primary/30"
+            >
+              <svg
+                width="40"
+                height="40"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="3"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="M5 12h14" />
+                <path d="M12 5l7 7-7 7" />
+              </svg>
+            </motion.div>
+            <motion.div
+              initial={prefersReduced ? false : { opacity: 0, scale: 0.5 }}
+              whileInView={prefersReduced ? {} : { opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.6, duration: 0.3 }}
+              className="md:hidden text-primary/30 rotate-90"
+            >
+              <svg
+                width="30"
+                height="30"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="3"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="M5 12h14" />
+                <path d="M12 5l7 7-7 7" />
+              </svg>
             </motion.div>
 
             {/* Platform */}
             <motion.div
               initial={prefersReduced ? false : { opacity: 0, scale: 0.9 }}
-              animate={prefersReduced ? {} : { opacity: 1, scale: 1 }}
-              transition={{ delay: 1.2 }}
-              className="card border-2 md:border-4 border-purple-400/50 bg-gradient-to-br from-purple-400/20 to-amber-400/20 text-center p-4 md:p-6"
+              whileInView={prefersReduced ? {} : { opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.8, duration: 0.4 }}
+              className="w-full md:w-1/3 card border-2 md:border-4 border-purple-400/50 bg-gradient-to-br from-purple-400/20 to-amber-400/20 text-center p-6"
             >
-              <div className="text-4xl md:text-6xl mb-3">🤝</div>
-              <h3 className="text-xl md:text-3xl font-black gradient-text uppercase mb-2">
+              <div className="text-5xl md:text-6xl mb-4">🤝</div>
+              <h3 className="text-2xl md:text-3xl font-black gradient-text uppercase mb-2">
                 Platform
               </h3>
-              <p className="text-sm md:text-base text-primary font-semibold">
+              <p className="text-base text-primary font-semibold">
                 10% ops cost
                 <br />
-                <span className="text-xs md:text-sm text-muted">0% profit</span>
+                <span className="text-sm text-muted">0% profit</span>
               </p>
+            </motion.div>
+
+            {/* Arrow 2 */}
+            <motion.div
+              initial={prefersReduced ? false : { opacity: 0, scale: 0.5 }}
+              whileInView={prefersReduced ? {} : { opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: 1.0, duration: 0.3 }}
+              className="hidden md:block text-primary/30"
+            >
+              <svg
+                width="40"
+                height="40"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="3"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="M5 12h14" />
+                <path d="M12 5l7 7-7 7" />
+              </svg>
+            </motion.div>
+            <motion.div
+              initial={prefersReduced ? false : { opacity: 0, scale: 0.5 }}
+              whileInView={prefersReduced ? {} : { opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: 1.0, duration: 0.3 }}
+              className="md:hidden text-primary/30 rotate-90"
+            >
+              <svg
+                width="30"
+                height="30"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="3"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="M5 12h14" />
+                <path d="M12 5l7 7-7 7" />
+              </svg>
             </motion.div>
 
             {/* Driver */}
             <motion.div
-              initial={prefersReduced ? false : { opacity: 0, x: 30 }}
-              animate={prefersReduced ? {} : { opacity: 1, x: 0 }}
-              transition={{ delay: 1.4 }}
-              className="card border-2 md:border-4 border-green-400/50 text-center p-4 md:p-6"
+              initial={prefersReduced ? false : { opacity: 0, x: 20 }}
+              whileInView={prefersReduced ? {} : { opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 1.2, duration: 0.4 }}
+              className="w-full md:w-1/3 card border-2 md:border-4 border-green-400/50 text-center p-6"
             >
-              <div className="text-4xl md:text-6xl mb-3">👤</div>
-              <h3 className="text-lg md:text-2xl font-black text-primary uppercase mb-2">
+              <div className="text-5xl md:text-6xl mb-4">👤</div>
+              <h3 className="text-xl md:text-2xl font-black text-primary uppercase mb-2">
                 Drivers
               </h3>
-              <p className="text-sm md:text-base text-secondary">Earn 90%</p>
+              <p className="text-base text-secondary">Earn 90%</p>
             </motion.div>
           </div>
         </motion.div>
@@ -207,7 +359,10 @@ function ComparisonSection() {
   ];
 
   return (
-    <Section variant="secondary">
+    <Section
+      variant="primary"
+      className="min-h-screen flex flex-col justify-center"
+    >
       <Container>
         <SectionTitle title={comparison.title} subtitle={comparison.subtitle} />
 
@@ -248,13 +403,13 @@ function ComparisonSection() {
                 : { opacity: 0, x: activeTab === "uberlyft" ? 50 : -50 }
             }
             transition={{ duration: 0.3 }}
-            className="bg-tertiary border-4 border-black rounded-3xl p-8 md:p-12 max-w-4xl mx-auto"
+            className="bg-tertiary border-4 border-black rounded-3xl p-6 md:p-12 max-w-4xl mx-auto"
           >
             <div className="text-center mb-8">
-              <h3 className="text-3xl md:text-5xl font-black text-primary uppercase mb-2">
+              <h3 className="text-2xl md:text-5xl font-black text-primary uppercase mb-2">
                 {data.platform}
               </h3>
-              <p className="text-secondary text-lg">
+              <p className="text-secondary text-base md:text-lg">
                 A $
                 {activeTab === "uberlyft"
                   ? comparison.fareUberLyft
@@ -266,45 +421,45 @@ function ComparisonSection() {
             <div className="grid sm:grid-cols-3 gap-6">
               {/* Rider Pays */}
               <div className="card border-4 border-amber-400/50 text-center">
-                <div className="text-5xl mb-2">💰</div>
-                <div className="text-5xl md:text-6xl font-black text-amber-400 mb-2">
+                <div className="text-4xl md:text-5xl mb-2">💰</div>
+                <div className="text-4xl md:text-6xl font-black text-amber-400 mb-2">
                   {data.rider}
                 </div>
-                <div className="text-secondary font-bold uppercase text-sm">
+                <div className="text-secondary font-bold uppercase text-xs md:text-sm">
                   Rider Pays
                 </div>
               </div>
 
               {/* Company/Platform */}
               <div className="card border-4 border-medium text-center">
-                <div className="text-5xl mb-2">
+                <div className="text-4xl md:text-5xl mb-2">
                   {activeTab === "uberlyft" ? "🚗" : "🛡️"}
                 </div>
-                <div className="text-5xl md:text-6xl font-black text-purple-400 mb-2 flex items-baseline justify-center gap-1">
+                <div className="text-4xl md:text-6xl font-black text-purple-400 mb-2 flex items-baseline justify-center gap-1">
                   {data.isApprox && (
-                    <span className="text-3xl opacity-70">≈</span>
+                    <span className="text-2xl md:text-3xl opacity-70">≈</span>
                   )}
                   <span>{data.company}</span>
                 </div>
-                <div className="text-secondary font-bold uppercase text-sm">
+                <div className="text-secondary font-bold uppercase text-xs md:text-sm">
                   {activeTab === "uberlyft" ? "Platform Take" : "Ops Cost"}
                 </div>
               </div>
 
               {/* Driver Gets */}
               <div className="card border-4 border-medium text-center">
-                <div className="text-5xl mb-2">👤</div>
+                <div className="text-4xl md:text-5xl mb-2">👤</div>
                 <div
-                  className={`text-5xl md:text-6xl font-black mb-2 flex items-baseline justify-center gap-1 ${
+                  className={`text-4xl md:text-6xl font-black mb-2 flex items-baseline justify-center gap-1 ${
                     activeTab === "uberlyft" ? "text-red-400" : "text-green-400"
                   }`}
                 >
                   {data.isApprox && (
-                    <span className="text-3xl opacity-70">≈</span>
+                    <span className="text-2xl md:text-3xl opacity-70">≈</span>
                   )}
                   <span>{data.driver}</span>
                 </div>
-                <div className="text-secondary font-bold uppercase text-sm">
+                <div className="text-secondary font-bold uppercase text-xs md:text-sm">
                   Driver Gets
                 </div>
               </div>
@@ -320,12 +475,12 @@ function ComparisonSection() {
           className="max-w-5xl mx-auto mt-16"
         >
           <div className="card border-4 border-purple-400/30 p-8 md:p-12">
-            <h3 className="text-3xl md:text-4xl font-black text-primary text-center uppercase mb-8">
+            <h3 className="text-2xl md:text-4xl font-black text-primary text-center uppercase mb-8">
               Our Impact
             </h3>
             <div className="grid sm:grid-cols-2 gap-8">
               <div className="text-center">
-                <div className="text-5xl md:text-6xl font-black gradient-text mb-2">
+                <div className="text-4xl md:text-6xl font-black gradient-text mb-2">
                   {counters.drivers}+
                 </div>
                 <div className="text-secondary font-bold uppercase">
@@ -333,7 +488,7 @@ function ComparisonSection() {
                 </div>
               </div>
               <div className="text-center">
-                <div className="text-5xl md:text-6xl font-black gradient-text mb-2">
+                <div className="text-4xl md:text-6xl font-black gradient-text mb-2">
                   ${counters.saved.toLocaleString()}+
                 </div>
                 <div className="text-secondary font-bold uppercase">
@@ -355,7 +510,7 @@ function ProgramCardsSection() {
   const prefersReduced = usePrefersReducedMotion();
 
   return (
-    <Section variant="primary">
+    <Section variant="secondary">
       <Container>
         <SectionTitle
           title="Our Programs"
@@ -381,7 +536,7 @@ function ProgramCardsSection() {
               </p>
               <p className="text-secondary mb-6">{program.description}</p>
 
-              <div className="absolute bottom-2.5 right-2.5">
+              <div className="absolute -bottom-2.5 right-2.5 bg-black rounded-full">
                 <a
                   href={program.href}
                   aria-disabled={program.comingSoon}
@@ -431,7 +586,7 @@ function StatsStripSection() {
   const { stats } = homepage;
 
   return (
-    <Section variant="secondary">
+    <Section variant="primary">
       <Container>
         <SectionTitle
           title="What We Stand On"
@@ -475,7 +630,7 @@ function CTABannerSection() {
   const { cta } = homepage;
 
   return (
-    <Section variant="primary" className="text-center">
+    <Section variant="secondary" className="text-center">
       {!prefersReduced && (
         <div className="absolute inset-0 animated-grid" aria-hidden="true" />
       )}
@@ -538,6 +693,7 @@ export default function HomePage() {
   return (
     <>
       <HeroSection />
+      <VisualFlowSection />
       <ComparisonSection />
       <ProgramCardsSection />
       <StatsStripSection />

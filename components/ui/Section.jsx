@@ -3,6 +3,7 @@ export default function Section({
   className = "",
   variant = "primary", // "primary" | "secondary" | "tertiary"
   noPadding = false,
+  ...props
 }) {
   const bgClasses = {
     primary: "bg-primary",
@@ -17,6 +18,7 @@ export default function Section({
         ${noPadding ? "" : "section-padding"}
         ${className}
       `.trim()}
+      {...props}
     >
       {children}
     </section>
