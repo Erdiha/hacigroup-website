@@ -4,7 +4,7 @@
 
 export const siteMetadata = {
   name: "HaciGroup",
-  description: "Nonprofit community platforms built for people, not profit.",
+  description: "Nonprofit technology platforms for community empowerment",
   url: "https://haciogroup.org",
 };
 
@@ -44,21 +44,21 @@ export const programs = [
     id: "nela-ride",
     title: "NELA Ride",
     icon: "🚗",
-    tagline: "Community-Based Transportation",
+    tagline: "Rideshare that pays drivers fairly",
     description:
-      "A nonprofit platform helping neighbors support each other through optional contributions and volunteer-driven rides.",
+      "A nonprofit rideshare platform where drivers earn 90% of fares and riders save 20% compared to traditional platforms.",
     color: "from-purple-400/20 to-purple-500/10",
     href: "https://nelaride.com",
     comingSoon: false,
-    status: "Active in Northeast LA",
+    status: "Live in Northeast LA",
   },
   {
     id: "handy-hack",
     title: "Handy Hack",
     icon: "🔧",
-    tagline: "Community Home Support",
+    tagline: "Affordable home services",
     description:
-      "A nonprofit way for neighbors to help one another with home tasks, supported by optional contributions that keep the mission running.",
+      "A nonprofit home services platform connecting communities with skilled workers for fair prices and fair wages.",
     color: "from-amber-400/20 to-amber-500/10",
     href: "#",
     comingSoon: true,
@@ -77,26 +77,26 @@ export const homepage = {
       line2: "For Everyone",
     },
     subtitle:
-      "A nonprofit platform where riders meaningfully support local drivers and help keep community transportation running.",
+      "A nonprofit technology platform delivering better value for riders and better earnings for drivers.",
   },
 
   comparison: {
     title: "See The Difference",
     subtitle:
-      "Our nonprofit model reinvests community support back into the community—no shareholders, no profit extraction.",
+      "Compare our transparent pricing model with traditional rideshare platforms",
     fareUberLyft: 50,
     fareNela: 40,
     stats: {
       drivers: 247,
-      saved: null,
+      saved: 94580,
     },
   },
 
   stats: [
     {
       value: "0%",
-      label: "Profit to Investors",
-      sublabel: "Community-first, always.",
+      label: "Profit to Shareholders",
+      sublabel: "We're a nonprofit.",
     },
     {
       value: "2",
@@ -106,19 +106,19 @@ export const homepage = {
     {
       value: "∞",
       label: "Community Impact",
-      sublabel: "Powered by people.",
+      sublabel: "People over profit.",
     },
     {
       value: "100%",
-      label: "Mission Transparency",
-      sublabel: "You can see where everything goes.",
+      label: "Price Transparency",
+      sublabel: "No surge games.",
     },
   ],
 
   cta: {
     title: "Ready to Make a Difference?",
     description:
-      "Join us in building technology that puts people at the center—not profit.",
+      "Join us in building technology that serves communities, not shareholders.",
     cta: {
       text: "Get Involved",
       href: "/get-involved",
@@ -134,14 +134,14 @@ export const team = {
     {
       name: "Alex Rivera",
       title: "Board Chair",
-      bio: "Civic technologist focused on improving life through people-first tools.",
+      bio: "Civic technologist focused on public-sector innovation.",
       image: "🛠️",
       linkedin: "#",
     },
     {
       name: "Dana Singh",
       title: "Treasurer",
-      bio: "Finance lead supporting community-owned projects.",
+      bio: "Finance lead for community-owned enterprises.",
       image: "📊",
       linkedin: "#",
     },
@@ -150,7 +150,7 @@ export const team = {
     {
       name: "Team Member",
       title: "Founder & Executive Director",
-      bio: "Dedicated to building technology that serves communities directly.",
+      bio: "Building community-owned technology platforms.",
       image: "👤",
       linkedin: "#",
       email: "hello@haci.group",
@@ -158,7 +158,7 @@ export const team = {
     {
       name: "Jordan Lee",
       title: "Head of Programs",
-      bio: "Launching and growing nonprofit services across Los Angeles.",
+      bio: "Launches new nonprofit services across Los Angeles.",
       image: "🚀",
       linkedin: "#",
     },
@@ -167,17 +167,17 @@ export const team = {
     {
       role: "Technical Advisors",
       icon: "💻",
-      description: "Experts guiding the development of our platforms.",
+      description: "Industry veterans guiding platform development",
     },
     {
       role: "Community Partners",
       icon: "🤝",
-      description: "Local groups helping us serve better and reach more people.",
+      description: "Local organizations helping us serve better",
     },
     {
       role: "Legal & Compliance",
       icon: "⚖️",
-      description: "Ensuring everything we do is transparent and responsible.",
+      description: "Ensuring nonprofit transparency and accountability",
     },
   ],
 };
@@ -186,32 +186,32 @@ export const foundingStory = {
   year: "2024",
   title: "Founded on a Simple Idea",
   description:
-    "Technology should lift people up, not drain money from them. We're here to build the alternative.",
+    "Technology platforms should serve people, not drain money from them. We're building the alternative.",
 };
 
 export const storyPanels = [
   {
     illustration: "🚗",
     title: "The Problem",
-    caption: "Commercial platforms take more than they give",
+    caption: "Rideshare drivers earn only ~35% of what riders pay",
     description:
-      "Most services are built to extract value. That leaves communities paying more while receiving less.",
+      "Traditional platforms take massive cuts, leaving drivers struggling and riders overpaying.",
     bgColor: "from-red-500/20 to-red-600/10",
   },
   {
     illustration: "💡",
     title: "The Solution",
-    caption: "A nonprofit approach changes the equation",
+    caption: "A nonprofit model changes everything",
     description:
-      "No investors. No profit-taking. Community contributions stay in the community.",
+      "By eliminating investor profit targets, we can pay drivers 90% and charge riders 20% less.",
     bgColor: "from-purple-500/20 to-purple-600/10",
   },
   {
     illustration: "🌱",
     title: "The Impact",
-    caption: "Local wealth stays local",
+    caption: "Money stays in the community",
     description:
-      "Every dollar saved or contributed goes right back into supporting neighbors and local families.",
+      "Every dollar saved or earned extra goes back to families, not shareholders.",
     bgColor: "from-green-500/20 to-green-600/10",
   },
 ];
@@ -224,7 +224,7 @@ export const getInvolvedContent = {
     titleTop: "Volunteer With HaciGroup",
     titleGradient: "Build Community-Owned Tech",
     subtitle:
-      "Bring your skills—engineering, organizing, design, storytelling—to help create people-first technology.",
+      "Bring your skills—engineering, organizing, design, storytelling—to grow people-first platforms.",
     ctas: {
       primary: { label: "Volunteer", href: "#volunteer" },
       secondary: { label: "Make a Donation", href: "/donate" },
@@ -232,27 +232,27 @@ export const getInvolvedContent = {
   },
   ways: {
     title: "Ways to Get Involved",
-    subtitle: "There’s a place for everyone in this work",
+    subtitle: "Choose the path that fits your skills and availability",
   },
   why: {
     title: "Why It Matters",
     blurb:
-      "We're not just building apps—we're creating a model where technology strengthens communities instead of draining them.",
+      "We're not just building apps—we're building a model for how technology can serve communities instead of draining value away from them.",
     pillars: [
       {
         icon: "💰",
-        title: "Community Value",
-        desc: "Support stays local. Neighbors directly benefit from the system.",
+        title: "Economic Justice",
+        desc: "Workers keep more of what they earn. Communities save money.",
       },
       {
         icon: "🔓",
         title: "Open & Transparent",
-        desc: "No tricks, no hidden fees, no surprises.",
+        desc: "No hidden fees, surge pricing, or algorithmic manipulation.",
       },
       {
         icon: "🏘️",
-        title: "Local Wealth",
-        desc: "Every contribution helps build stronger neighborhoods.",
+        title: "Community Wealth",
+        desc: "Every dollar circulates locally instead of flowing to distant shareholders.",
       },
     ],
   },
@@ -262,17 +262,17 @@ export const getInvolvedContent = {
       {
         step: 1,
         title: "Choose Your Path",
-        desc: "Volunteer, donate, or support in your own way.",
+        desc: "Pick volunteer, donate, or spread the word",
       },
       {
         step: 2,
         title: "Connect With Us",
-        desc: "Fill out a short form and we’ll follow up.",
+        desc: "Fill out a quick form or reach out directly",
       },
       {
         step: 3,
         title: "Make an Impact",
-        desc: "Be part of building community-powered tech.",
+        desc: "Join the movement building fairer technology",
       },
     ],
   },
@@ -280,7 +280,7 @@ export const getInvolvedContent = {
   finalCta: {
     icon: "🚀",
     title: "Ready to Get Started?",
-    blurb: "Let’s build something better together.",
+    blurb: "Let's build something better together.",
     buttons: {
       primary: { label: "Volunteer With Us", href: "#volunteer" },
       secondary: { label: "Support Our Mission", href: "/donate" },
@@ -292,12 +292,12 @@ export const involvementPathways = [
   {
     title: "Volunteer Your Time",
     icon: "🙌",
-    tagline: "Share skills, build community",
+    tagline: "Contribute skills, build community",
     description:
-      "Help improve and grow our platforms. Whether you code, design, organize, or support behind the scenes, you can make a difference.",
+      "Help build, test, and improve our platforms. From coding to community organizing, we need diverse talents.",
     benefits: [
-      "Flexible schedules",
-      "Real-world projects",
+      "Flexible remote work",
+      "Real portfolio projects",
       "Mission-driven community",
     ],
     cta: "See Opportunities",
@@ -306,13 +306,13 @@ export const involvementPathways = [
   {
     title: "Make a Donation",
     icon: "💝",
-    tagline: "Support nonprofit technology",
+    tagline: "Fund nonprofit technology",
     description:
-      "Your contribution keeps our platforms running and accessible to everyone.",
+      "Your tax-deductible contribution directly supports platform development and operations.",
     benefits: [
-      "Supports development",
-      "Transparent reporting",
-      "Community impact",
+      "100% goes to operations",
+      "Full transparency",
+      "Tax-deductible (501c3)",
     ],
     cta: "Donate Now",
     href: "/donate",
@@ -320,12 +320,12 @@ export const involvementPathways = [
   {
     title: "Spread the Word",
     icon: "📣",
-    tagline: "Help us reach more neighbors",
+    tagline: "Help us reach more communities",
     description:
-      "Share our mission with friends, local groups, and anyone who could benefit.",
+      "Share our mission with friends, neighbors, and local organizations who might benefit.",
     benefits: [
-      "Shareable materials",
-      "Community outreach tools",
+      "Social media toolkit",
+      "Community presentation materials",
       "Referral program (coming soon)",
     ],
     cta: "Get Resources",
@@ -334,13 +334,13 @@ export const involvementPathways = [
   {
     title: "Become a Partner",
     icon: "🤝",
-    tagline: "Work together with us",
+    tagline: "Organizational collaboration",
     description:
-      "Local organizations, businesses, and nonprofits can help expand our reach and impact.",
+      "Local businesses, nonprofits, and community groups can partner to expand our impact.",
     benefits: [
-      "Co-branded community work",
-      "Mutual support",
-      "Impact reports",
+      "Co-marketing opportunities",
+      "Preferred pricing for members",
+      "Community impact reports",
     ],
     cta: "Explore Partnership",
     href: "/contact",
@@ -355,27 +355,27 @@ export const faqs = {
     {
       question: "What kinds of volunteers are you looking for?",
       answer:
-        "We welcome builders, organizers, storytellers, and anyone who wants to support community-first technology. There’s a place for everyone.",
+        "We need builders (engineering, design, product), storytellers (communications, video, social), community organizers, and operations partners. If you care about people-first tech, there is a slot for you.",
     },
     {
       question: "Do I need to live in Los Angeles?",
       answer:
-        "Most roles can be done remotely. Community-centered roles work best in LA, but you’re welcome anywhere.",
+        "Most tech and operations roles are remote-friendly. Community organizing roles benefit from being in LA, but we still welcome collaborators from other cities.",
     },
     {
       question: "How much time do volunteers usually give?",
       answer:
-        "Many volunteers give around 5–10 hours a week, but we’re flexible. The biggest thing is consistency.",
+        "Many roles work well at 5-10 hours per week, but we can flex around your schedule. The most important thing is consistent follow-through on the commitments you make.",
     },
     {
-      question: "Are these roles paid?",
+      question: "Are these roles paid or do you offer stipends?",
       answer:
-        "These are volunteer roles. We cover reasonable project costs and provide references. As we grow, we plan to add fellowships.",
+        "These are volunteer positions. We do cover reasonable project expenses and write professional references, and we are building pathways for future paid fellowships as funding grows.",
     },
     {
       question: "How do I get started?",
       answer:
-        "Scroll to the volunteer form, send us your info, and we’ll reach out. You can also email hello@hacigroup.org anytime.",
+        "Scroll to the volunteer form on this page, submit your info, and we will reach out with next steps. You can also email hello@hacigroup.org if you have a specific idea or partnership in mind.",
     },
   ],
 };
@@ -385,10 +385,10 @@ export const faqs = {
 // ==========================================
 export const donateContent = {
   hero: {
-    title: "Support Community Technology",
+    title: "Support Platform Technology",
     subtitle:
-      "Your contribution helps build and maintain NELA Ride and The Handy Hack—nonprofit platforms created to support everyday people.",
-    badge: "100% supports operations & development",
+      "Your contribution funds the development and operation of NELA Ride and The Handy Hack—nonprofit platforms that prioritize fair wages for workers and affordable services for communities.",
+    badge: "100% funds operations & dev",
   },
   whyDonate: {
     title: "Why Donate",
@@ -396,17 +396,17 @@ export const donateContent = {
       {
         icon: "👥",
         title: "Community-Owned",
-        desc: "Built by and for the people who use it.",
+        desc: "Built by and for the people who use it",
       },
       {
         icon: "📊",
-        title: "Transparent",
-        desc: "You can see exactly where every dollar goes.",
+        title: "Fully Transparent",
+        desc: "See exactly where every dollar goes",
       },
       {
         icon: "🌱",
-        title: "Local Impact",
-        desc: "No shareholder drain—every dollar helps communities thrive.",
+        title: "Sustainable Growth",
+        desc: "No investor skim, just fair operations",
       },
     ],
   },
@@ -415,7 +415,7 @@ export const donateContent = {
     frequencyOptions: ["Monthly", "One-Time"],
   },
   banner: {
-    text: "Supporting nonprofit community platforms. A California nonprofit public-benefit corporation — IRS 501(c)(3) application submitted.",
+    text: "Supporting nonprofit technology platforms. A California nonprofit corporation — IRS 501(c)(3) pending.",
     icon: "★",
   },
   tiers: [
@@ -424,8 +424,8 @@ export const donateContent = {
       title: "Supporter",
       amount: 25,
       icon: "🌟",
-      description: "Help cover essential platform costs.",
-      benefits: ["Supporter badge", "Monthly updates"],
+      description: "Help cover basic platform costs",
+      benefits: ["Supporter badge", "Monthly impact updates"],
       popular: false,
     },
     {
@@ -433,7 +433,7 @@ export const donateContent = {
       title: "Sustainer",
       amount: 50,
       icon: "💚",
-      description: "Keep our work going strong.",
+      description: "Sustain ongoing operations",
       benefits: [
         "All Supporter perks",
         "Quarterly impact reports",
@@ -446,11 +446,11 @@ export const donateContent = {
       title: "Champion",
       amount: 100,
       icon: "🏆",
-      description: "Help grow and expand our mission.",
+      description: "Champion our mission",
       benefits: [
         "All Sustainer perks",
         "Annual strategy briefing",
-        "Early feature previews",
+        "Early feature access",
       ],
       popular: false,
     },
@@ -459,7 +459,7 @@ export const donateContent = {
       title: "Custom Amount",
       amount: 0,
       icon: "💝",
-      description: "Give what feels right.",
+      description: "Choose what works for you",
       benefits: ["Every dollar makes a difference"],
       popular: false,
     },
@@ -474,34 +474,34 @@ export const donateContent = {
     {
       icon: "💻",
       title: "Platform Development",
-      desc: "Building and improving our apps and tools.",
+      desc: "Building and maintaining our apps and infrastructure",
     },
     {
       icon: "🛡️",
-      title: "Operations",
-      desc: "Keeping the platforms running smoothly and responsibly.",
+      title: "Operations & Safety",
+      desc: "Insurance, compliance, background checks, support",
     },
     {
       icon: "📢",
       title: "Community Outreach",
-      desc: "Connecting with neighborhoods and local partners.",
+      desc: "Growing awareness and serving more neighborhoods",
     },
   ],
   trust: [
     {
       icon: "🔒",
       title: "Secure & Encrypted",
-      text: "Bank-level protection for all transactions.",
+      text: "Bank-level security for all transactions",
     },
     {
-      icon: "📄",
-      title: "501(c)(3) Status",
-      text: "Tax-deductible contributions once approval is finalized.",
+      icon: "✅",
+      title: "501(c)(3) Verified",
+      text: "Tax-deductible donations, full transparency",
     },
     {
       icon: "📊",
       title: "Impact Reporting",
-      text: "See how your support makes a difference.",
+      text: "See exactly how your contribution makes a difference",
     },
   ],
 };
@@ -512,7 +512,7 @@ export const donateContent = {
 export const ctaBanner = {
   title: "Ready to Make a Difference?",
   description:
-    "Join us in building technology that serves people and strengthens communities.",
+    "Join us in building technology that serves communities, not shareholders.",
   cta: {
     text: "Get Involved",
     href: "/get-involved",
@@ -527,20 +527,20 @@ export const getInvolvedPage = {
     title: "Join Us in Building",
     titleGradient: "Community-Owned Tech",
     subtitle:
-      "Use your skills to help create technology that puts people first.",
+      "Use your skills to create technology that serves people, not profits",
   },
 
   positions: {
     title: "Open Positions",
-    subtitle: "Roles we’re currently seeking support for",
+    subtitle: "Specific roles we're actively hiring for",
     emptyState:
-      "No open positions right now. Check back soon or send a general volunteer form below!",
+      "No open positions at the moment. Check back soon or submit a general volunteer form below!",
   },
 
   volunteer: {
     title: "General Volunteer Interest",
     subtitle:
-      "Not seeing a specific role? Send your info—we’ll find a good fit with your skills.",
+      "Not seeing a specific role? Submit your info and we'll find the right fit for your skills",
   },
 };
 

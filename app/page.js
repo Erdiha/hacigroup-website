@@ -468,7 +468,7 @@ function ComparisonSection() {
         </AnimatePresence>
 
         {/* Impact Stats */}
-        <motion.div
+        {/* <motion.div
           initial={prefersReduced ? false : { opacity: 0, y: 30 }}
           whileInView={prefersReduced ? {} : { opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -497,7 +497,7 @@ function ComparisonSection() {
               </div>
             </div>
           </div>
-        </motion.div>
+        </motion.div> */}
       </Container>
     </Section>
   );
