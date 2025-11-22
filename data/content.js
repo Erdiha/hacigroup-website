@@ -388,6 +388,35 @@ export const donateContent = {
     title: "Support Platform Technology",
     subtitle:
       "Your contribution funds the development and operation of NELA Ride and The Handy Hack—nonprofit platforms that prioritize fair wages for workers and affordable services for communities.",
+    badge: "100% funds operations & dev",
+  },
+  whyDonate: {
+    title: "Why Donate",
+    items: [
+      {
+        icon: "👥",
+        title: "Community-Owned",
+        desc: "Built by and for the people who use it",
+      },
+      {
+        icon: "📊",
+        title: "Fully Transparent",
+        desc: "See exactly where every dollar goes",
+      },
+      {
+        icon: "🌱",
+        title: "Sustainable Growth",
+        desc: "No investor skim, just fair operations",
+      },
+    ],
+  },
+  tierSection: {
+    title: "Choose Your Impact Level",
+    frequencyOptions: ["Monthly", "One-Time"],
+  },
+  banner: {
+    text: "Supporting nonprofit technology platforms. A California nonprofit corporation — IRS 501(c)(3) pending.",
+    icon: "★",
   },
   tiers: [
     {

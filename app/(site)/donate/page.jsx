@@ -8,7 +8,7 @@ import DonateBackground from "@/components/ui/DonateBackground";
 import Link from "next/link";
 
 export default function DonatePage() {
-  const { hero, tiers, paymentMethods, allocations, trust } = donateContent;
+  const { hero, whyDonate, tierSection, banner, tiers, paymentMethods, allocations, trust } = donateContent;
 
   const [selectedTier, setSelectedTier] = useState("sustainer");
   const [customAmount, setCustomAmount] = useState("");
@@ -81,8 +81,8 @@ export default function DonatePage() {
       <div className="bg-brand-purple/10 border-b border-white/5 py-3 px-4 backdrop-blur-sm sticky top-0 z-50">
         <Container>
           <p className="text-center text-white/90 text-xs sm:text-sm font-medium flex items-center justify-center gap-2">
-            <span className="text-brand-amber">★</span>
-            Supporting nonprofit technology platforms • 501(c)(3) tax-deductible
+            <span className="text-brand-amber">{banner.icon}</span>
+            {banner.text}
           </p>
         </Container>
       </div>
@@ -98,19 +98,17 @@ export default function DonatePage() {
             transition={{ duration: 0.6 }}
           >
             <h1 className="text-4xl sm:text-6xl lg:text-7xl font-black text-white mb-8 leading-tight">
-              Support Platform <br />
-              <span className="gradient-text">Technology</span>
+              {hero.title.split(" ").slice(0, 2).join(" ")} <br />
+              <span className="gradient-text">{hero.title.split(" ").slice(2).join(" ")}</span>
             </h1>
 
             <p className="text-lg sm:text-xl text-white/70 max-w-2xl mx-auto mb-8 leading-relaxed">
-              Your contribution funds the development and operation of NELA Ride
-              and The Handy Hack—nonprofit platforms that prioritize fair wages
-              for workers and affordable services for communities.
+              {hero.subtitle}
             </p>
 
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 backdrop-blur-md">
               <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
-              <span className="text-sm font-medium text-white/80">100% funds operations & dev</span>
+              <span className="text-sm font-medium text-white/80">{hero.badge}</span>
             </div>
           </motion.div>
         </Container>
@@ -121,11 +119,7 @@ export default function DonatePage() {
         <div className="absolute inset-0 bg-gradient-to-b from-[#0B1020] via-[#13182b] to-[#0B1020]" />
         <Container className="relative z-10 max-w-6xl">
           <div className="grid md:grid-cols-3 gap-6">
-            {[
-              { icon: "👥", title: "Community-Owned", desc: "Built by and for the people who use it" },
-              { icon: "📊", title: "Fully Transparent", desc: "See exactly where every dollar goes" },
-              { icon: "🌱", title: "Sustainable Growth", desc: "No investor skim, just fair operations" }
-            ].map((item, i) => (
+            {whyDonate.items.map((item, i) => (
               <motion.div
                 key={i}
                 initial={{ opacity: 0, y: 20 }}
@@ -148,7 +142,7 @@ export default function DonatePage() {
         <Container className="max-w-7xl">
           <div className="text-center mb-12">
             <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">
-              Choose Your Impact Level
+              {tierSection.title}
             </h2>
             
             {/* Frequency Toggle */}
