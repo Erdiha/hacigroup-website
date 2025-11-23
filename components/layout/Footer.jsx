@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { siteMetadata, navigation } from "@/data/content";
 import AnimatedBrand from "../ui/AnimatedBrand";
+import { useLanguage } from "@/components/providers/LanguageProvider";
 
 function usePrefersReducedMotion() {
   const [prefers, setPrefers] = useState(false);
@@ -23,6 +24,7 @@ function usePrefersReducedMotion() {
 export default function SiteFooter() {
   const prefersReduced = usePrefersReducedMotion();
   const year = new Date().getFullYear();
+  const { t } = useLanguage();
 
   return (
     <footer className="relative bg-primary border-t border-white/10">
@@ -45,14 +47,14 @@ export default function SiteFooter() {
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         {/* ---------- TOP: BRAND & STATEMENT ---------- */}
-        <div className="grid gap-10 md:grid-cols-3">
+        <div className="grid gap-10 md:grid-cols-2">
           <div>
             <h3 className="text-white text-2xl font-black uppercase tracking-tight">
               {/* {siteMetadata.name} */}
               <AnimatedBrand showLogo={false} />
             </h3>
             <p className="mt-3 text-white/75 font-semibold leading-relaxed">
-              {siteMetadata.description}
+              {t("footer.tagline")}
             </p>
             <div className="mt-6">
               <a
@@ -69,10 +71,13 @@ export default function SiteFooter() {
             {/* Programs */}
             <div>
               <p className="text-secondary font-black uppercase tracking-wide mb-3 ">
-                Programs
+                {t("footer.programs")}
               </p>
               <ul className="space-y-2">
-                {navigation.footer.programs.map((item) => (
+                {[
+                  { href: "/get-involved", label: t("nav.getInvolved") },
+                  { href: "/donate", label: t("nav.donate") }
+                ].map((item) => (
                   <li key={item.href}>
                     <Link
                       href={item.href}
@@ -88,10 +93,13 @@ export default function SiteFooter() {
             {/* Organization */}
             <div>
               <p className="text-secondary font-black uppercase tracking-wide mb-3">
-                Organization
+                {t("footer.organization")}
               </p>
               <ul className="space-y-2">
-                {navigation.footer.organization.map((item) => (
+                {[
+                  { href: "/about", label: t("nav.about") },
+                  { href: "/contact", label: t("nav.contact") }
+                ].map((item) => (
                   <li key={item.href}>
                     <Link
                       href={item.href}
@@ -104,42 +112,6 @@ export default function SiteFooter() {
               </ul>
             </div>
           </nav>
-
-          {/* ---------- NEWSLETTER ---------- */}
-          <form
-            action="/subscribe"
-            method="post"
-            className="bg-secondary border border-white/10 rounded-2xl p-4 sm:p-5"
-          >
-            <label
-              htmlFor="email"
-              className="block text-white font-bold uppercase text-xs tracking-wide mb-2"
-            >
-              Get updates (no spam, ever)
-            </label>
-            <div className="flex flex-col sm:flex-row gap-3">
-              <input
-                id="email"
-                name="email"
-                type="email"
-                required
-                placeholder="you@neighbor.net"
-                className="w-full rounded-xl bg-[#0B1020] border border-white/20 px-4 py-3 text-white placeholder:text-white/40 focus:outline-none focus:border-white/40"
-              />
-              <button
-                type="submit"
-                className="shrink-0 inline-flex items-center justify-center px-3 py-0 font-black text-white rounded-xl border-2 border-black shadow-[4px_4px_0_0_rgba(0,0,0,1)] hover:shadow-[6px_6px_0_0_rgba(0,0,0,1)] hover:-translate-x-px hover:-translate-y-px transition-all"
-                style={{
-                  backgroundImage: "linear-gradient(90deg, #8b5cf6, #f59e0b)",
-                }}
-              >
-                Subscribe
-              </button>
-            </div>
-            <p className="mt-2 text-[11px] text-white/50">
-              We’ll email only when there’s real progress to share.
-            </p>
-          </form>
         </div>
 
         {/* ---------- BOTTOM BAR ---------- */}
@@ -148,7 +120,11 @@ export default function SiteFooter() {
             © {year} {siteMetadata.name} — Nonprofit technology for neighbors.
           </p>
           <div className="flex items-center gap-4 text-xs">
-            {navigation.footer.legal.map((item, i) => (
+            {[
+              { href: "/privacy", label: t("footer.privacy") },
+              { href: "/terms", label: t("footer.terms") },
+              { href: "/cookies", label: t("footer.cookies") }
+            ].map((item, i) => (
               <React.Fragment key={item.href}>
                 {i > 0 && <span className="text-white/20">•</span>}
                 <a

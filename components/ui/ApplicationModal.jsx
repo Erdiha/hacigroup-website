@@ -8,6 +8,7 @@ import SectionTitle from "@/components/ui/SectionTitle";
 import { collection, addDoc } from "firebase/firestore";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { db, storage } from "@/lib/firebase";
+import CustomSelect from "./CustomSelect";
 
 const APPLICATIONS_COLLECTION = "applications";
 
@@ -135,25 +136,25 @@ export function ApplicationModal({ position, onClose }) {
   };
 
   return (
-    <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 overflow-y-auto">
+    <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-start sm:items-center justify-center p-4 overflow-y-auto">
       <motion.div
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
         exit={{ opacity: 0, scale: 0.95 }}
-        className="bg-[#0f1528] border-2 border-purple-500/50 rounded-3xl p-6 sm:p-8 max-w-2xl w-full my-8"
+        className="bg-[#0f1528] border-2 border-purple-500/50 rounded-3xl p-6 sm:p-8 max-w-2xl w-full my-12 sm:my-8 max-h-[85vh] sm:max-h-[90vh] overflow-y-auto relative"
       >
-        <div className="flex items-start justify-between mb-6">
+        <div className="flex items-start justify-between mb-6 gap-4">
           <div>
-            <h2 className="text-2xl sm:text-3xl font-black text-white uppercase">
+            <h3 className=" text-lg font-black text-white uppercase leading-tight">
               Apply for {position?.title || "Position"}
-            </h2>
-            <p className="text-amber-400 text-sm font-semibold mt-1">
+            </h3>
+            <p className="text-amber-400 text-xs sm:text-sm font-semibold mt-1.5">
               {position?.location} • {position?.type}
             </p>
           </div>
           <button
             onClick={onClose}
-            className="text-white/50 hover:text-white text-3xl leading-none"
+            className="text-white/50 hover:text-white text-2xl leading-none p-2 -mr-2 -mt-2"
           >
             ×
           </button>
@@ -211,18 +212,13 @@ export function ApplicationModal({ position, onClose }) {
               <span className="text-white/70 text-sm font-semibold mb-2 block">
                 Upload Type *
               </span>
-              <select
-                name="fileType"
-                value={formData.fileType}
-                onChange={handleInputChange}
-                className="w-full bg-white/5 border-2 border-white/10 rounded-xl px-4 py-3 text-white focus:border-purple-500 focus:outline-none"
-              >
-                {fileTypeOptions.map((option) => (
-                  <option key={option.value} value={option.value}>
-                    {option.label}
-                  </option>
-                ))}
-              </select>
+                <CustomSelect
+                  name="fileType"
+                  value={formData.fileType}
+                  onChange={handleInputChange}
+                  options={fileTypeOptions}
+                  className="w-full"
+                />
             </label>
 
             <label className="block">
@@ -459,18 +455,13 @@ export function VolunteerForm({
                 <span className="text-white/70 text-sm font-semibold mb-2 block">
                   Upload Type
                 </span>
-                <select
+                <CustomSelect
                   name="fileType"
                   value={formData.fileType}
                   onChange={handleInputChange}
-                  className="w-full bg-white/5 border-2 border-white/10 rounded-xl px-4 py-3 text-white focus:border-purple-500 focus:outline-none"
-                >
-                  {fileTypeOptions.map((option) => (
-                    <option key={option.value} value={option.value}>
-                      {option.label}
-                    </option>
-                  ))}
-                </select>
+                  options={fileTypeOptions}
+                  className="w-full"
+                />
               </label>
 
               <label className="block">

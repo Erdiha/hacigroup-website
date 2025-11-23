@@ -4,6 +4,8 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
+import CustomSelect from "@/components/ui/CustomSelect";
+import { useLanguage } from "@/components/providers/LanguageProvider";
 
 function usePrefersReducedMotion() {
   const [prefers, setPrefers] = useState(false);
@@ -21,6 +23,8 @@ function usePrefersReducedMotion() {
 export default function ContactPage() {
   const prefersReduced = usePrefersReducedMotion();
   const [status, setStatus] = useState({ state: "idle", msg: "" });
+  const [reason, setReason] = useState("General question");
+  const { t } = useLanguage();
 
   async function onSubmit(e) {
     e.preventDefault();
@@ -28,7 +32,7 @@ export default function ContactPage() {
     // Honeypot: abort if filled
     if (form.elements["website"].value) return;
 
-    setStatus({ state: "loading", msg: "Sending..." });
+    setStatus({ state: "loading", msg: t("contact.form.sending") });
     try {
       const payload = {
         name: form.elements["name"].value,
@@ -43,12 +47,12 @@ export default function ContactPage() {
         body: JSON.stringify(payload),
       });
       if (!res.ok) throw new Error("Request failed");
-      setStatus({ state: "success", msg: "Thanks — we’ll reply soon." });
+      setStatus({ state: "success", msg: t("contact.form.success") });
       form.reset();
     } catch {
       setStatus({
         state: "error",
-        msg: "Something went wrong. Please try again.",
+        msg: t("contact.form.error"),
       });
     }
   }
@@ -81,11 +85,10 @@ export default function ContactPage() {
           className="text-center mb-12"
         >
           <h1 className="text-4xl sm:text-6xl font-black text-white uppercase">
-            Contact HaciGroup
+            {t("contact.hero.title")}
           </h1>
           <p className="mt-4 text-white/75 text-lg sm:text-xl">
-            We’re building nonprofit tech with neighbors. Reach out — we
-            actually read these.
+            {t("contact.hero.subtitle")}
           </p>
         </motion.div>
 
@@ -109,24 +112,24 @@ export default function ContactPage() {
               <div className="grid sm:grid-cols-2 gap-4">
                 <label className="block">
                   <span className="block text-white/70 text-sm font-semibold mb-2">
-                    Your Name
+                    {t("contact.form.name")}
                   </span>
                   <input
                     name="name"
                     required
-                    placeholder="Rosa Delgado"
+                    placeholder={t("contact.form.placeholderName")}
                     className="w-full rounded-xl bg-[#0B1020] border border-white/20 px-4 py-3 text-white placeholder:text-white/40 focus:outline-none focus:border-white/40"
                   />
                 </label>
                 <label className="block">
                   <span className="block text-white/70 text-sm font-semibold mb-2">
-                    Email
+                    {t("contact.form.email")}
                   </span>
                   <input
                     type="email"
                     name="email"
                     required
-                    placeholder="you@neighbor.net"
+                    placeholder={t("contact.form.placeholderEmail")}
                     className="w-full rounded-xl bg-[#0B1020] border border-white/20 px-4 py-3 text-white placeholder:text-white/40 focus:outline-none focus:border-white/40"
                   />
                 </label>
@@ -134,38 +137,39 @@ export default function ContactPage() {
 
               <label className="block">
                 <span className="block text-white/70 text-sm font-semibold mb-2">
-                  Reason
+                  {t("contact.form.reason")}
                 </span>
-                <select
+                <CustomSelect
                   name="reason"
-                  defaultValue="General question"
-                  className="w-full rounded-xl bg-[#0B1020] border border-white/20 px-4 py-3 text-white focus:outline-none focus:border-white/40"
-                >
-                  <option>General question</option>
-                  <option>Volunteer</option>
-                  <option>Partnership</option>
-                  <option>Press / Media</option>
-                  <option>Donation / Sponsorship</option>
-                </select>
+                  value={reason}
+                  onChange={(e) => setReason(e.target.value)}
+                  options={[
+                    "General question",
+                    "Volunteer",
+                    "Partnership",
+                    "Press / Media",
+                    "Donation / Sponsorship",
+                  ]}
+                  className="w-full"
+                />
               </label>
 
               <label className="block">
                 <span className="block text-white/70 text-sm font-semibold mb-2">
-                  Message
+                  {t("contact.form.message")}
                 </span>
                 <textarea
                   name="message"
                   required
                   rows={6}
-                  placeholder="Tell us a bit about what you have in mind."
+                  placeholder={t("contact.form.placeholderMessage")}
                   className="w-full rounded-xl bg-[#0B1020] border border-white/20 px-4 py-3 text-white placeholder:text-white/40 focus:outline-none focus:border-white/40"
                 />
               </label>
 
               <div className="flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between">
                 <p className="text-white/50 text-xs">
-                  We’ll never sell your info. Replies typically within 2–3
-                  business days.
+                  {t("contact.form.privacy")}
                 </p>
                 <button
                   type="submit"
@@ -175,7 +179,7 @@ export default function ContactPage() {
                     backgroundImage: "linear-gradient(90deg, #8b5cf6, #f59e0b)",
                   }}
                 >
-                  {status.state === "loading" ? "Sending…" : "Send Message"}
+                  {status.state === "loading" ? t("contact.form.sending") : t("contact.form.send")}
                 </button>
               </div>
 
@@ -203,12 +207,12 @@ export default function ContactPage() {
             className="lg:col-span-1 bg-[#0f1528] border border-white/10 rounded-2xl p-6 sm:p-8 h-fit"
           >
             <h2 className="text-white text-xl font-black uppercase mb-4">
-              Reach Us
+              {t("contact.sidebar.title")}
             </h2>
             <ul className="space-y-4 text-white/80 text-sm">
               <li>
                 <span className="block text-white/50 text-xs uppercase font-bold mb-1">
-                  General Inquiries
+                  {t("footer.generalInquiries")}
                 </span>
                 <a
                   href="mailto:contact@hacigroup.org"
@@ -219,7 +223,7 @@ export default function ContactPage() {
               </li>
               <li>
                 <span className="block text-white/50 text-xs uppercase font-bold mb-1">
-                  Media & Press
+                  {t("footer.mediaPress")}
                 </span>
                 <a
                   href="mailto:media@hacigroup.org"
@@ -230,7 +234,7 @@ export default function ContactPage() {
               </li>
               <li>
                 <span className="block text-white/50 text-xs uppercase font-bold mb-1">
-                  Partnerships
+                  {t("footer.partnerships")}
                 </span>
                 <a
                   href="mailto:partnerships@hacigroup.org"
@@ -241,7 +245,7 @@ export default function ContactPage() {
               </li>
               <li>
                 <span className="block text-white/50 text-xs uppercase font-bold mb-1">
-                  Support
+                  {t("footer.support")}
                 </span>
                 <a
                   href="mailto:support@hacigroup.org"
@@ -254,7 +258,7 @@ export default function ContactPage() {
 
             <div className="mt-8 pt-6 border-t border-white/10">
               <h3 className="text-white text-sm font-bold uppercase mb-2">
-                Follow
+                {t("contact.sidebar.follow")}
               </h3>
               <div className="flex items-center gap-4 text-white/70">
                 <a

@@ -9,6 +9,7 @@ import { homepage, programs } from "@/data/content";
 import Section from "@/components/ui/Section";
 
 import HeroBackground from "@/components/ui/HeroBackground";
+import { useLanguage } from "@/components/providers/LanguageProvider";
 
 // ==========================================
 // UTILITY HOOKS
@@ -32,6 +33,7 @@ function usePrefersReducedMotion() {
 function HeroSection() {
   const prefersReduced = usePrefersReducedMotion();
   const { hero } = homepage;
+  const { t } = useLanguage();
 
   return (
     <Section
@@ -64,7 +66,7 @@ function HeroSection() {
               transition={{ delay: 0.3 }}
               className="inline-block gradient-text"
             >
-              {hero.title.line1}
+              {t("home.hero.titleLine1")}
             </motion.span>
             <br />
             <motion.span
@@ -73,7 +75,7 @@ function HeroSection() {
               transition={{ delay: 0.4 }}
               className="inline-block text-primary"
             >
-              {hero.title.line2}
+              {t("home.hero.titleLine2")}
             </motion.span>
           </h1>
 
@@ -84,7 +86,7 @@ function HeroSection() {
             transition={{ delay: 0.6 }}
             className="text-sm sm:text-lg lg:text-xl text-secondary font-medium max-w-4xl mx-auto mb-8 sm:mb-12"
           >
-            {hero.subtitle}
+            {t("home.hero.subtitle")}
           </motion.p>
 
           {/* CTA & Scroll Indicator */}
@@ -98,7 +100,7 @@ function HeroSection() {
               href="#visual-flow"
               className="btn-gradient inline-flex items-center text-lg px-8 py-4"
             >
-              See How It Works
+              {t("home.hero.ctaPrimary")}
               <svg
                 className="w-5 h-5 ml-2"
                 fill="none"
@@ -119,7 +121,7 @@ function HeroSection() {
               transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
               className="text-muted text-sm font-medium uppercase tracking-widest mt-8"
             >
-              Scroll to Explore
+              {t("home.hero.scroll")}
               <div className="w-px h-12 bg-gradient-to-b from-muted/0 via-muted/50 to-muted/0 mx-auto mt-2" />
             </motion.div>
           </motion.div>
@@ -134,6 +136,7 @@ function HeroSection() {
 // ==========================================
 function VisualFlowSection() {
   const prefersReduced = usePrefersReducedMotion();
+  const { t } = useLanguage();
 
   return (
     <Section
@@ -151,10 +154,10 @@ function VisualFlowSection() {
         >
           <div className="text-center mb-12 md:mb-16">
             <h2 className="text-2xl md:text-4xl font-black text-primary uppercase mb-4">
-              The Ecosystem
+              {t("home.visualFlow.title")}
             </h2>
             <p className="text-secondary text-lg">
-              How money moves in our platform
+              {t("home.visualFlow.subtitle")}
             </p>
           </div>
 
@@ -169,9 +172,9 @@ function VisualFlowSection() {
             >
               <div className="text-5xl md:text-6xl mb-4">🚶</div>
               <h3 className="text-xl md:text-2xl font-black text-primary uppercase mb-2">
-                Riders
+                {t("home.visualFlow.rider")}
               </h3>
-              <p className="text-base text-secondary">Pay 20% less</p>
+              <p className="text-base text-secondary">{t("home.visualFlow.riderDesc")}</p>
             </motion.div>
 
             {/* Arrow 1 */}
@@ -228,12 +231,12 @@ function VisualFlowSection() {
             >
               <div className="text-5xl md:text-6xl mb-4">🤝</div>
               <h3 className="text-2xl md:text-3xl font-black gradient-text uppercase mb-2">
-                Platform
+                {t("home.visualFlow.platform")}
               </h3>
               <p className="text-base text-primary font-semibold">
-                10% ops cost
+                {t("home.visualFlow.platformDesc")}
                 <br />
-                <span className="text-sm text-muted">0% profit</span>
+                <span className="text-sm text-muted">{t("home.visualFlow.platformProfit")}</span>
               </p>
             </motion.div>
 
@@ -291,9 +294,9 @@ function VisualFlowSection() {
             >
               <div className="text-5xl md:text-6xl mb-4">👤</div>
               <h3 className="text-xl md:text-2xl font-black text-primary uppercase mb-2">
-                Drivers
+                {t("home.visualFlow.driver")}
               </h3>
-              <p className="text-base text-secondary">Earn 90%</p>
+              <p className="text-base text-secondary">{t("home.visualFlow.driverDesc")}</p>
             </motion.div>
           </div>
         </motion.div>
@@ -310,6 +313,7 @@ function ComparisonSection() {
   const { comparison } = homepage;
   const [activeTab, setActiveTab] = useState("uberlyft");
   const [counters, setCounters] = useState({ drivers: 0, saved: 0 });
+  const { t } = useLanguage();
 
   // Animated counters
   useEffect(() => {
@@ -342,7 +346,7 @@ function ComparisonSection() {
       isApprox: true,
     },
     nela: {
-      platform: "NELA Ride (20% cheaper)",
+      platform: "NELA Ride",
       rider: `$${comparison.fareNela}`,
       driver: `$${Math.round(comparison.fareNela * 0.9)}`,
       company: `$${Math.round(comparison.fareNela * 0.1)}`,
@@ -354,8 +358,8 @@ function ComparisonSection() {
 
   const data = comparisonData[activeTab];
   const tabs = [
-    { id: "uberlyft", label: "Uber/Lyft", color: "bg-red-500" },
-    { id: "nela", label: "NELA Ride", color: "bg-green-500" },
+    { id: "uberlyft", label: t("home.comparison.tabUber"), color: "bg-red-500" },
+    { id: "nela", label: t("home.comparison.tabNela"), color: "bg-green-500" },
   ];
 
   return (
@@ -364,7 +368,7 @@ function ComparisonSection() {
       className="min-h-screen flex flex-col justify-center"
     >
       <Container>
-        <SectionTitle title={comparison.title} subtitle={comparison.subtitle} />
+        <SectionTitle title={t("home.comparison.title")} subtitle={t("home.comparison.subtitle")} />
 
         {/* Tabs */}
         <div className="flex flex-wrap justify-center gap-4 mb-8">
@@ -414,7 +418,7 @@ function ComparisonSection() {
                 {activeTab === "uberlyft"
                   ? comparison.fareUberLyft
                   : comparison.fareNela}{" "}
-                ride breakdown
+                {t("home.comparison.breakdown")}
               </p>
             </div>
 
@@ -426,7 +430,7 @@ function ComparisonSection() {
                   {data.rider}
                 </div>
                 <div className="text-secondary font-bold uppercase text-xs md:text-sm">
-                  Rider Pays
+                  {t("home.comparison.riderPays")}
                 </div>
               </div>
 
@@ -442,7 +446,7 @@ function ComparisonSection() {
                   <span>{data.company}</span>
                 </div>
                 <div className="text-secondary font-bold uppercase text-xs md:text-sm">
-                  {activeTab === "uberlyft" ? "Platform Take" : "Ops Cost"}
+                  {activeTab === "uberlyft" ? t("home.comparison.platformTake") : t("home.comparison.opsCost")}
                 </div>
               </div>
 
@@ -460,7 +464,7 @@ function ComparisonSection() {
                   <span>{data.driver}</span>
                 </div>
                 <div className="text-secondary font-bold uppercase text-xs md:text-sm">
-                  Driver Gets
+                  {t("home.comparison.driverGets")}
                 </div>
               </div>
             </div>
@@ -508,13 +512,14 @@ function ComparisonSection() {
 // ==========================================
 function ProgramCardsSection() {
   const prefersReduced = usePrefersReducedMotion();
+  const { t } = useLanguage();
 
   return (
     <Section variant="secondary">
       <Container>
         <SectionTitle
-          title="Our Programs"
-          subtitle="Practical tools that move money and power back into the community"
+          title={t("home.programs.title")}
+          subtitle={t("home.programs.subtitle")}
         />
 
         <div className="grid md:grid-cols-2 gap-8">
@@ -552,7 +557,8 @@ function ProgramCardsSection() {
                     }
                   `}
                 >
-                  {program.comingSoon ? "Coming Soon" : "Learn More"}
+
+                  {program.comingSoon ? t("common.comingSoon") : t("common.learnMore")}
                   {!program.comingSoon && (
                     <svg
                       className="ml-2 w-4 h-4"
@@ -584,13 +590,14 @@ function ProgramCardsSection() {
 function StatsStripSection() {
   const prefersReduced = usePrefersReducedMotion();
   const { stats } = homepage;
+  const { t } = useLanguage();
 
   return (
     <Section variant="primary">
       <Container>
         <SectionTitle
-          title="What We Stand On"
-          subtitle="Numbers that explain our values, not hide them"
+          title={t("home.stats.title")}
+          subtitle={t("home.stats.subtitle")}
         />
 
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
@@ -628,6 +635,7 @@ function StatsStripSection() {
 function CTABannerSection() {
   const prefersReduced = usePrefersReducedMotion();
   const { cta } = homepage;
+  const { t } = useLanguage();
 
   return (
     <Section variant="secondary" className="text-center">
@@ -642,7 +650,7 @@ function CTABannerSection() {
           viewport={{ once: true }}
           className="text-4xl sm:text-6xl font-black text-primary mb-6"
         >
-          {cta.title}
+          {t("home.cta.title")}
         </motion.h2>
 
         <motion.p
@@ -652,7 +660,7 @@ function CTABannerSection() {
           transition={{ delay: 0.2 }}
           className="text-xl text-secondary mb-10 font-medium max-w-3xl mx-auto"
         >
-          {cta.description}
+          {t("home.cta.description")}
         </motion.p>
 
         <motion.div
@@ -665,7 +673,7 @@ function CTABannerSection() {
             href={cta.cta.href}
             className="btn-gradient inline-flex items-center"
           >
-            {cta.cta.text}
+            {t("home.cta.button")}
             <svg
               className="w-5 h-5 ml-2"
               fill="none"

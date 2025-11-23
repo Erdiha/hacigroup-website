@@ -18,6 +18,7 @@ import {
   VolunteerForm,
 } from "@/components/ui/ApplicationModal";
 import GetInvolvedBackground from "@/components/ui/GetInvolvedBackground";
+import { useLanguage } from "@/components/providers/LanguageProvider";
 
 const safeTimestamp = (value) => {
   if (!value) return 0;
@@ -34,6 +35,19 @@ export default function GetInvolvedPage() {
   const [positionsLoading, setPositionsLoading] = useState(true);
   const [positionsError, setPositionsError] = useState("");
   const [selectedPosition, setSelectedPosition] = useState(null);
+  const [expandedCards, setExpandedCards] = useState({});
+  const { t, language } = useLanguage();
+
+  // Helper to get localized field
+  const getLocalized = (item, field) => {
+    if (!item) return "";
+    // If current language is default (en), return base field
+    if (language === "en") return item[field];
+    // Otherwise try to find localized field (e.g. title_es)
+    const localizedValue = item[`${field}_${language}`];
+    // Fallback to base field if localized is empty
+    return localizedValue || item[field];
+  };
 
   useEffect(() => {
     async function loadPositions() {
@@ -52,7 +66,7 @@ export default function GetInvolvedPage() {
       } catch (error) {
         console.error("Error loading positions:", error);
         setPositionsError(
-          "Unable to load open positions right now. Please try again later."
+          t("common.error")
         );
       } finally {
         setPositionsLoading(false);
@@ -75,10 +89,10 @@ export default function GetInvolvedPage() {
             transition={{ delay: 0.1 }}
             className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-white mb-6 leading-tight px-4"
           >
-            {c.hero.titleTop}
+            {t("getInvolved.hero.titleTop")}
             <br />
             <span className="bg-linear-to-r from-purple-400 via-amber-400 to-purple-400 bg-clip-text text-transparent">
-              {c.hero.titleGradient}
+              {t("getInvolved.hero.titleGradient")}
             </span>
           </motion.h1>
 
@@ -88,7 +102,7 @@ export default function GetInvolvedPage() {
             transition={{ delay: 0.2 }}
             className="text-base sm:text-lg lg:text-xl text-white/80 max-w-3xl mx-auto mb-8 sm:mb-12 leading-relaxed px-4"
           >
-            {c.hero.subtitle}
+            {t("getInvolved.hero.subtitle")}
           </motion.p>
 
           <motion.div
@@ -101,13 +115,13 @@ export default function GetInvolvedPage() {
               href={c.hero.ctas.primary.href}
               className="inline-flex items-center justify-center px-6 sm:px-8 py-3 sm:py-4 text-base sm:text-lg font-bold text-white rounded-xl border-2 border-white/20 bg-white/10 hover:bg-white/20 hover:border-white/40 transition-all"
             >
-              {c.hero.ctas.primary.label}
+              {t("getInvolved.hero.ctaPrimary")}
             </Link>
             <Link
               href={c.hero.ctas.secondary.href}
               className="inline-flex items-center justify-center px-6 sm:px-8 py-3 sm:py-4 text-base sm:text-lg font-bold text-white rounded-xl border-2 border-purple-500/50 bg-purple-500/10 hover:bg-purple-500/20 hover:border-purple-500/70 transition-all"
             >
-              {c.hero.ctas.secondary.label}
+              {t("getInvolved.hero.ctaSecondary")}
             </Link>
           </motion.div>
         </div>
@@ -115,8 +129,8 @@ export default function GetInvolvedPage() {
       <Section variant="secondary">
         <Container>
           <SectionTitle
-            title="Open Positions"
-            subtitle="Specific roles we're actively recruiting for right now."
+            title={t("getInvolved.positions.title")}
+            subtitle={t("getInvolved.positions.subtitle")}
           />
 
           {positionsError && (
@@ -127,75 +141,104 @@ export default function GetInvolvedPage() {
 
           {positionsLoading ? (
             <p className="text-center text-white/60 py-10">
-              Loading opportunities...
+              {t("getInvolved.positions.loading")}
             </p>
           ) : positions.length === 0 ? (
             <div className="text-center text-white/60 py-12">
               <p className="text-lg font-semibold mb-2">
-                No open positions right now
+                {t("getInvolved.positions.empty")}
               </p>
               <p className="text-sm text-white/50">
-                Submit the volunteer interest form below and we&apos;ll reach
-                out when something is a good fit.
+                {t("getInvolved.positions.emptyDesc")}
               </p>
             </div>
           ) : (
-            <div className="grid md:grid-cols-2 gap-6">
-              {positions.map((position, i) => (
-                <motion.div
-                  key={position.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.05 }}
-                  className="bg-[#161b22] border-2 border-white/10 rounded-2xl p-6 hover:border-purple-500/50 transition-all flex flex-col gap-4"
-                >
-                  <div className="flex items-start justify-between gap-4">
-                    <div className="text-5xl">{position.icon || "💼"}</div>
-                    <div className="flex flex-col items-end gap-2">
-                      <span className="text-xs font-bold px-3 py-1 bg-purple-500/20 text-purple-300 rounded-full border border-purple-500/30">
-                        {position.type || "Role"}
-                      </span>
-                      <span className="text-xs text-white/60">
-                        📍 {position.location || "Remote"}
-                      </span>
-                    </div>
-                  </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
+              {positions.map((position, i) => {
+                const isExpanded = expandedCards[position.id];
+                const description = getLocalized(position, "description") || "No description provided.";
+                const shouldTruncate = description.length > 100;
+                const displayDescription = isExpanded || !shouldTruncate 
+                  ? description 
+                  : description.substring(0, 100) + "...";
 
-                  <div>
-                    <h3 className="text-xl font-bold text-white mb-2">
-                      {position.title}
-                    </h3>
-                    <p className="text-purple-400 text-sm font-semibold mb-3">
-                      {position.commitment || "Flexible"}
-                    </p>
-                    <p className="text-white/70 text-sm leading-relaxed mb-3">
-                      {position.description}
-                    </p>
-                  </div>
-
-                  {Array.isArray(position.skills) &&
-                    position.skills.length > 0 && (
-                      <div className="flex flex-wrap gap-2">
-                        {position.skills.map((skill, idx) => (
-                          <span
-                            key={position.id + '-' + idx}
-                            className="text-xs px-2 py-1 bg-white/5 text-white/70 rounded-full border border-white/10"
-                          >
-                            {skill}
-                          </span>
-                        ))}
-                      </div>
-                    )}
-
-                  <button
-                    onClick={() => setSelectedPosition(position)}
-                    className="w-full mt-auto px-4 py-3 bg-gradient-to-r from-purple-500 to-amber-500 text-white font-bold rounded-xl hover:shadow-lg hover:shadow-purple-500/40 transition-all"
+                return (
+                  <motion.div
+                    key={position.id}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: i * 0.05 }}
+                    className="bg-[#161b22] border-2 border-white/10 rounded-xl p-5 hover:border-purple-500/50 transition-all flex flex-col gap-3.5"
                   >
-                    Apply Now
-                  </button>
-                </motion.div>
-              ))}
+                    {/* Header with icon and badges */}
+                      <div className="flex-1 min-w-0">
+                        <h4 className="text-xl font-bold text-white mb-2 pr-8 group-hover:text-purple-400 transition-colors leading-tight">
+                          {getLocalized(position, "title") || "Untitled Position"}
+                        </h4>
+                        <div className="flex flex-wrap gap-x-3 gap-y-1.5 text-xs text-white/60">
+                          <span className="flex items-center gap-1">
+                            💼 {getLocalized(position, "type") || "Role"}
+                          </span>
+                          <span className="flex items-center gap-1">
+                            📍 {getLocalized(position, "location") || t("getInvolved.positions.location")}
+                          </span>
+                          {getLocalized(position, "commitment") && (
+                            <span className="flex items-center gap-1">
+                              ⏱️ {getLocalized(position, "commitment")}
+                            </span>
+                          )}
+                        </div>
+                      </div>
+
+                    {/* Description with expand/collapse */}
+                    <div className="flex-grow">
+                      <p className="text-white/70 text-[10px] leading-relaxed">
+                        {displayDescription}
+                      </p>
+                      {shouldTruncate && (
+                        <button
+                          onClick={() => setExpandedCards(prev => ({
+                            ...prev,
+                            [position.id]: !prev[position.id]
+                          }))}
+                          className="text-purple-400 text-[10px] font-semibold mt-0.5 hover:text-purple-300 transition-colors"
+                        >
+                          {isExpanded ? t("common.showLess") : t("common.readMore")}
+                        </button>
+                      )}
+                    </div>
+
+                    {/* Skills */}
+                    {Array.isArray(position.skills) &&
+                      position.skills.length > 0 && (
+                        <div className="flex flex-wrap gap-1">
+                          {position.skills.slice(0, 3).map((skill, idx) => (
+                            <span
+                              key={position.id + '-' + idx}
+                              className="text-[9px] px-1.5 py-0.5 bg-white/5 text-white/70 rounded-full border border-white/10"
+                            >
+                              {skill}
+                            </span>
+                          ))}
+                          {position.skills.length > 3 && (
+                            <span className="text-[9px] px-1.5 py-0.5 text-white/50">
+                              +{position.skills.length - 3} more
+                            </span>
+                          )}
+                        </div>
+                      )}
+
+                    {/* Apply button */}
+                    <button
+                      onClick={() => setSelectedPosition(position)}
+                      className="w-full px-3 py-2 bg-gradient-to-r from-purple-500 to-amber-500 text-white text-xs font-bold rounded-lg hover:shadow-lg hover:shadow-purple-500/40 transition-all"
+                    >
+                      {t("common.applyNow")}
+                    </button>
+                  </motion.div>
+                );
+              })}
             </div>
           )}
         </Container>
@@ -206,10 +249,10 @@ export default function GetInvolvedPage() {
       <section className="py-16 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8">
         <div className="max-w-5xl mx-auto text-center">
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4 sm:mb-6">
-            {c.why.title}
+            {t("getInvolved.why.title")}
           </h2>
           <p className="text-base sm:text-lg lg:text-xl text-white/80 mb-10 sm:mb-12 leading-relaxed max-w-3xl mx-auto">
-            {c.why.blurb}
+            {t("getInvolved.why.description")}
           </p>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 text-left">
@@ -224,10 +267,10 @@ export default function GetInvolvedPage() {
               >
                 <div className="text-4xl sm:text-5xl mb-4">{item.icon}</div>
                 <h3 className="text-lg sm:text-xl font-bold text-white mb-3">
-                  {item.title}
+                  {t(`getInvolved.why.p${i + 1}Title`)}
                 </h3>
                 <p className="text-white/70 text-sm leading-relaxed">
-                  {item.desc}
+                  {t(`getInvolved.why.p${i + 1}Desc`)}
                 </p>
               </motion.div>
             ))}
@@ -238,7 +281,7 @@ export default function GetInvolvedPage() {
       <section className="py-16 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8 bg-[#0f1528]">
         <div className="max-w-5xl mx-auto">
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white text-center mb-10 sm:mb-12">
-            {c.how.title}
+            {t("getInvolved.how.title")}
           </h2>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8 sm:gap-10 lg:gap-12">
             {c.how.steps.map((step, i) => (
@@ -254,10 +297,10 @@ export default function GetInvolvedPage() {
                   {step.step}
                 </div>
                 <h3 className="text-lg sm:text-xl font-bold text-white mb-3">
-                  {step.title}
+                  {t(`getInvolved.how.s${i + 1}Title`)}
                 </h3>
                 <p className="text-white/70 text-sm leading-relaxed">
-                  {step.desc}
+                  {t(`getInvolved.how.s${i + 1}Desc`)}
                 </p>
               </motion.div>
             ))}
@@ -268,7 +311,7 @@ export default function GetInvolvedPage() {
       <section className="py-16 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto">
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white text-center mb-10 sm:mb-12">
-            {c.faqsTitle}
+            {t("getInvolved.faq.title")}
           </h2>
           <div className="space-y-3 sm:space-y-4">
             {faqs.general.map((faq, i) => (
@@ -310,23 +353,23 @@ export default function GetInvolvedPage() {
             {c.finalCta.icon}
           </div>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4 sm:mb-6">
-            {c.finalCta.title}
+            {t("getInvolved.cta.title")}
           </h2>
           <p className="text-base sm:text-lg lg:text-xl text-white/70 mb-8 leading-relaxed">
-            {c.finalCta.blurb}
+            {t("getInvolved.cta.description")}
           </p>
           <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
             <Link
               href={c.finalCta.buttons.primary.href}
               className="inline-flex items-center justify-center px-8 sm:px-10 py-4 sm:py-5 text-base sm:text-lg font-bold text-white rounded-xl border-2 border-purple-500/50 bg-purple-500/10 hover:bg-purple-500/20 hover:border-purple-500/70 transition-all"
             >
-              {c.finalCta.buttons.primary.label}
+              {t("getInvolved.cta.primary")}
             </Link>
             <Link
               href={c.finalCta.buttons.secondary.href}
               className="inline-flex items-center justify-center px-8 sm:px-10 py-4 sm:py-5 text-base sm:text-lg font-bold text-white rounded-xl border-2 border-white/20 bg-white/10 hover:bg-white/20 hover:border-white/40 transition-all"
             >
-              {c.finalCta.buttons.secondary.label}
+              {t("getInvolved.cta.secondary")}
             </Link>
           </div>
         </div>

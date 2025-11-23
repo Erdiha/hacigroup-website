@@ -2,25 +2,38 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import AnimatedBrand from "@/components/ui/AnimatedBrand";
 import { navigation, siteMetadata } from "@/data/content";
 import Image from "next/image";
 import Container from "@/components/ui/Container";
+import { useLanguage } from "@/components/providers/LanguageProvider";
+import LanguageSelector from "@/components/ui/LanguageSelector";
 
 export default function Header() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
+  const { t } = useLanguage();
+  const headerRef = useRef(null);
+
+  // Close mobile menu when clicking outside
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (headerRef.current && !headerRef.current.contains(event.target) && open) {
+        setOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [open]);
 
   // Fallback only if navigation.main is missing/empty
-  const navItems =
-    navigation?.main && navigation.main.length > 0
-      ? navigation.main
-      : [
-          { href: "/about", label: "About" },
-          { href: "/get-involved", label: "Get Involved" },
-        ];
+  const navItems = [
+    { href: "/about", label: t("nav.about") },
+    { href: "/get-involved", label: t("nav.getInvolved") },
+    { href: "/contact", label: t("nav.contact") },
+  ];
 
   const isActive = (href) =>
     href === "/"
@@ -28,7 +41,7 @@ export default function Header() {
       : pathname === href || pathname.startsWith(href + "/");
 
   return (
-    <header className="sticky top-0 z-50 bg-primary/90 backdrop-blur-md b">
+    <header ref={headerRef} className="sticky top-0 z-50 bg-primary/90 backdrop-blur-md b">
       <Container className="h-16 flex items-center justify-between">
         <div className="flex items-center  w-fit justify-center">
           <Link
@@ -68,6 +81,7 @@ export default function Header() {
               </Link>
             );
           })}
+          <LanguageSelector />
         </nav>
 
         <button
@@ -102,9 +116,9 @@ export default function Header() {
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="md:hidden border-t border-white/10 overflow-hidden"
+            className="md:hidden border-t border-white/10"
           >
-            <div className="mx-auto max-w-7xl px-4 py-4 flex flex-col gap-3">
+            <div className="mx-auto max-w-7xl px-4 py-4 flex flex-col gap-3 overflow-visible">
               {navItems.map((item) => (
                 <Link
                   key={item.href}
@@ -116,7 +130,11 @@ export default function Header() {
                 >
                   {item.label}
                 </Link>
+
               ))}
+              <div className="pt-2 border-t border-white/10">
+                <LanguageSelector className="w-full" />
+              </div>
               {/* <Link
                 href="/donate"
                 onClick={() => setOpen(false)}

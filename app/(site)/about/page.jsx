@@ -13,22 +13,20 @@ import TeamCard from "@/components/ui/TeamCard";
 import { db, storage } from "@/lib/firebase";
 import { foundingStory, storyPanels, programs, team } from "@/data/content";
 import AboutBackground from "@/components/ui/AboutBackground";
+import { useLanguage } from "@/components/providers/LanguageProvider";
 
 const values = [
   {
     icon: "🤝",
-    title: "Community Governance",
-    description: "We co-design products with riders, drivers, and neighbors.",
+    key: "v1",
   },
   {
     icon: "🧭",
-    title: "Radical Transparency",
-    description: "Budgets, roadmaps, and metrics stay public by default.",
+    key: "v2",
   },
   {
     icon: "⚙️",
-    title: "Lean Execution",
-    description: "Small, senior teams ship fast and stay focused on impact.",
+    key: "v3",
   },
 ];
 
@@ -70,6 +68,7 @@ export default function AboutPage() {
   const [leadershipMembers, setLeadershipMembers] = useState([]);
   const [teamLoading, setTeamLoading] = useState(false);
   const [teamError, setTeamError] = useState("");
+  const { t } = useLanguage();
 
   useEffect(() => {
     let isMounted = true;
@@ -129,7 +128,7 @@ export default function AboutPage() {
         console.error("Error loading team:", error);
         if (isMounted) {
           setTeamError(
-            "Unable to load the latest team roster. Showing cached info."
+            t("about.team.error")
           );
         }
       } finally {
@@ -157,16 +156,14 @@ export default function AboutPage() {
             transition={{ duration: 0.6 }}
           >
             <p className="text-sm sm:text-base font-bold uppercase tracking-[0.3em] text-brand-purple mb-6">
-              About HaciGroup
+              {t("about.hero.label")}
             </p>
             <h1 className="text-4xl sm:text-6xl md:text-7xl font-black mb-8 leading-tight">
-              Community-Owned Tech, <br className="hidden sm:block" />
-              <span className="gradient-text">Built in Los Angeles</span>
+              {t("about.hero.title")} <br className="hidden sm:block" />
+              <span className="gradient-text">{t("about.hero.titleGradient")}</span>
             </h1>
             <p className="text-lg sm:text-xl text-white/70 max-w-3xl mx-auto leading-relaxed">
-              We are a nonprofit technology organization building platforms like NELA Ride and The
-              Handy Hack. Our mission is simple: put workers, riders, and
-              neighborhoods first—always.
+              {t("about.hero.description")}
             </p>
           </motion.div>
         </Container>
@@ -185,21 +182,21 @@ export default function AboutPage() {
               <div className="absolute -inset-4 bg-gradient-to-br from-brand-purple/20 to-brand-amber/20 rounded-3xl blur-2xl" />
               <div className="relative bg-[#13182b] border border-white/10 rounded-3xl p-8 sm:p-12">
                 <div className="text-6xl sm:text-8xl font-black gradient-text mb-6">
-                  {foundingStory.year}
+                  {t("about.story.year")}
                 </div>
                 <h3 className="text-2xl font-bold text-white mb-4">
-                  {foundingStory.title}
+                  {t("about.story.title")}
                 </h3>
                 <p className="text-white/70 text-lg leading-relaxed">
-                  {foundingStory.description}
+                  {t("about.story.description")}
                 </p>
               </div>
             </motion.div>
 
             <div className="space-y-8">
               <SectionTitle
-                title="How We Got Here"
-                subtitle="Three moments that define our work"
+                title={t("about.story.timelineTitle")}
+                subtitle={t("about.story.timelineSubtitle")}
                 className="mb-8"
               />
               <div className="space-y-6">
@@ -221,11 +218,11 @@ export default function AboutPage() {
                           Step {item.step}
                         </span>
                         <h4 className="text-lg font-bold text-white">
-                          {item.title}
+                          {t(`about.story.step${idx + 1}Title`)}
                         </h4>
                       </div>
                       <p className="text-white/60 leading-relaxed">
-                        {item.description}
+                        {t(`about.story.step${idx + 1}Desc`)}
                       </p>
                     </div>
                   </motion.div>
@@ -240,8 +237,8 @@ export default function AboutPage() {
       <Section variant="primary" className="py-20 sm:py-32">
         <Container className="px-4">
           <SectionTitle
-            title="Programs We Run"
-            subtitle="Proof that nonprofit tech can scale"
+            title={t("home.programs.title")}
+            subtitle={t("home.programs.subtitle")}
             centered
             gradient
           />
@@ -261,7 +258,7 @@ export default function AboutPage() {
                   </div>
                   {program.comingSoon && (
                     <span className="px-4 py-1.5 rounded-full bg-white/5 border border-white/10 text-xs font-bold uppercase tracking-wider text-white/60">
-                      Coming Soon
+                      {t("common.comingSoon")}
                     </span>
                   )}
                 </div>
@@ -283,12 +280,12 @@ export default function AboutPage() {
                       target="_blank"
                       className="inline-flex items-center gap-2 text-sm font-bold uppercase tracking-wider text-white hover:text-brand-amber transition-colors"
                     >
-                      Visit Site
+                      {t("common.visitSite")}
                       <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
                     </Link>
                   ) : (
                     <span className="text-sm font-bold uppercase tracking-wider text-white/30 cursor-not-allowed">
-                      Launching Soon
+                      {t("common.launchingSoon")}
                     </span>
                   )}
                 </div>
@@ -302,8 +299,8 @@ export default function AboutPage() {
       <Section variant="secondary" className="py-20 sm:py-32">
         <Container className="px-4">
           <SectionTitle
-            title="Meet the Team"
-            subtitle="Board leadership, hands-on operators, and trusted advisors"
+            title={t("about.team.title")}
+            subtitle={t("about.team.subtitle")}
             centered
           />
 
@@ -316,7 +313,7 @@ export default function AboutPage() {
           {teamLoading && (
             <div className="text-center py-20">
               <div className="inline-block w-8 h-8 border-2 border-white/20 border-t-white rounded-full animate-spin mb-4" />
-              <p className="text-white/50 text-sm uppercase tracking-widest">Syncing Roster...</p>
+              <p className="text-white/50 text-sm uppercase tracking-widest">{t("about.team.syncing")}</p>
             </div>
           )}
 
@@ -325,11 +322,11 @@ export default function AboutPage() {
               {/* Board */}
               <div>
                 <div className="flex items-center gap-4 mb-8">
-                  <h3 className="text-xl font-bold text-white">Board of Directors</h3>
+                  <h3 className="text-xl font-bold text-white">{t("about.team.board")}</h3>
                   <div className="h-px flex-1 bg-white/10" />
                 </div>
                 {boardMembers.length === 0 ? (
-                  <p className="text-white/40 italic">Roster coming soon.</p>
+                  <p className="text-white/40 italic">{t("about.team.empty")}</p>
                 ) : (
                   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                     {boardMembers.map((member) => (
@@ -342,11 +339,11 @@ export default function AboutPage() {
               {/* Leadership */}
               <div>
                 <div className="flex items-center gap-4 mb-8">
-                  <h3 className="text-xl font-bold text-white">Leadership Team</h3>
+                  <h3 className="text-xl font-bold text-white">{t("about.team.leadership")}</h3>
                   <div className="h-px flex-1 bg-white/10" />
                 </div>
                 {leadershipMembers.length === 0 ? (
-                  <p className="text-white/40 italic">Roster coming soon.</p>
+                  <p className="text-white/40 italic">{t("about.team.empty")}</p>
                 ) : (
                   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                     {leadershipMembers.map((member) => (
@@ -359,7 +356,7 @@ export default function AboutPage() {
               {/* Advisory */}
               <div>
                 <div className="flex items-center gap-4 mb-8">
-                  <h3 className="text-xl font-bold text-white">Advisory & Support</h3>
+                  <h3 className="text-xl font-bold text-white">{t("about.team.advisory")}</h3>
                   <div className="h-px flex-1 bg-white/10" />
                 </div>
                 <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -384,8 +381,8 @@ export default function AboutPage() {
       <Section variant="primary" className="py-20 sm:py-32">
         <Container className="px-4">
           <SectionTitle
-            title="How We Operate"
-            subtitle="Principles we carry into every project"
+            title={t("about.values.title")}
+            subtitle={t("about.values.subtitle")}
             centered
           />
           <div className="grid md:grid-cols-3 gap-8 mt-16">
@@ -401,8 +398,8 @@ export default function AboutPage() {
                 <div className="w-20 h-20 mx-auto bg-white/5 rounded-full flex items-center justify-center text-4xl mb-6 group-hover:scale-110 transition-transform">
                   {item.icon}
                 </div>
-                <h3 className="text-xl font-bold text-white mb-3">{item.title}</h3>
-                <p className="text-white/60 leading-relaxed">{item.description}</p>
+                <h3 className="text-xl font-bold text-white mb-3">{t(`about.values.${item.key}Title`)}</h3>
+                <p className="text-white/60 leading-relaxed">{t(`about.values.${item.key}Desc`)}</p>
               </motion.div>
             ))}
           </div>
@@ -415,24 +412,23 @@ export default function AboutPage() {
         <Container className="relative z-10 px-4 text-center">
           <div className="max-w-3xl mx-auto">
             <h2 className="text-4xl sm:text-5xl font-black text-white mb-6">
-              Ready to make a difference?
+              {t("about.cta.title")}
             </h2>
             <p className="text-xl text-white/70 mb-10">
-              Volunteer, partner, or introduce us to your neighborhood. <br className="hidden sm:block" />
-              We build faster when we build together.
+              {t("about.cta.description")}
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <Link
                 href="/get-involved#volunteer"
                 className="w-full sm:w-auto px-8 py-4 rounded-xl bg-white text-[#0B1020] font-bold text-lg hover:bg-gray-100 transition-colors"
               >
-                Volunteer
+                {t("common.volunteer")}
               </Link>
               <Link
                 href="/contact"
                 className="w-full sm:w-auto px-8 py-4 rounded-xl border-2 border-white/20 text-white font-bold text-lg hover:bg-white/10 transition-colors"
               >
-                Contact Us
+                {t("common.contactUs")}
               </Link>
             </div>
           </div>

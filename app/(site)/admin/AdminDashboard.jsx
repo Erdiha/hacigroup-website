@@ -3,6 +3,7 @@
 import { useState, useEffect, useMemo, useCallback } from "react";
 import { motion } from "framer-motion";
 import { auth, db, storage } from "@/lib/firebase";
+import CustomSelect from "@/components/ui/CustomSelect";
 import {
   signInWithEmailAndPassword,
   signOut,
@@ -38,6 +39,10 @@ const createDefaultPositionForm = () => ({
   commitment: "",
   description: "",
   skills: "",
+  // Translations
+  title_es: "", description_es: "", location_es: "", type_es: "", commitment_es: "",
+  title_zh: "", description_zh: "", location_zh: "", type_zh: "", commitment_zh: "",
+  title_tr: "", description_tr: "", location_tr: "", type_tr: "", commitment_tr: "",
 });
 
 const createDefaultTeamForm = () => ({
@@ -121,6 +126,7 @@ export default function AdminDashboard({ initialSection = "applications" }) {
   const [teamError, setTeamError] = useState("");
   const [teamSubmitting, setTeamSubmitting] = useState(false);
   const [teamMessage, setTeamMessage] = useState("");
+  const [activeLangTab, setActiveLangTab] = useState("es"); // For form translations
 
   useEffect(() => {
     setActiveSection(initialSection);
@@ -274,6 +280,10 @@ export default function AdminDashboard({ initialSection = "applications" }) {
       commitment: position.commitment || "",
       description: position.description || "",
       skills: (position.skills || []).join(", "),
+      // Translations
+      title_es: position.title_es || "", description_es: position.description_es || "", location_es: position.location_es || "", type_es: position.type_es || "", commitment_es: position.commitment_es || "",
+      title_zh: position.title_zh || "", description_zh: position.description_zh || "", location_zh: position.location_zh || "", type_zh: position.type_zh || "", commitment_zh: position.commitment_zh || "",
+      title_tr: position.title_tr || "", description_tr: position.description_tr || "", location_tr: position.location_tr || "", type_tr: position.type_tr || "", commitment_tr: position.commitment_tr || "",
     });
     if (typeof window !== "undefined") {
       window.scrollTo({ top: 0, behavior: "smooth" });
@@ -711,30 +721,22 @@ export default function AdminDashboard({ initialSection = "applications" }) {
                 className="flex-1 bg-white/5 border-2 border-white/10 rounded-2xl px-4 py-3 text-white placeholder-white/30 focus:border-purple-500 focus:outline-none"
               />
               <div className="flex flex-col gap-3 sm:flex-row">
-                <select
+                <CustomSelect
                   value={statusFilter}
                   onChange={(e) => setStatusFilter(e.target.value)}
-                  className="bg-white/5 border-2 border-white/10 rounded-2xl px-4 py-3 text-white focus:border-purple-500 focus:outline-none"
-                >
-                  {statusOptions.map((option) => (
-                    <option key={option.value} value={option.value}>
-                      {option.label}
-                    </option>
-                  ))}
-                </select>
-                <select
+                  options={statusOptions}
+                  className="w-40"
+                />
+                <CustomSelect
                   value={positionFilter}
                   onChange={(e) => setPositionFilter(e.target.value)}
-                  className="bg-white/5 border-2 border-white/10 rounded-2xl px-4 py-3 text-white focus:border-purple-500 focus:outline-none"
-                >
-                  <option value="all">All positions</option>
-                  <option value="general">General submission</option>
-                  {positionOptions.map((option) => (
-                    <option key={option.value} value={option.value}>
-                      {option.label}
-                    </option>
-                  ))}
-                </select>
+                  options={[
+                    { value: "all", label: "All positions" },
+                    { value: "general", label: "General submission" },
+                    ...positionOptions
+                  ]}
+                  className="w-48"
+                />
               </div>
             </div>
 
@@ -904,19 +906,21 @@ export default function AdminDashboard({ initialSection = "applications" }) {
                     <span className="text-white/70 text-sm font-semibold mb-2 block">
                       Type *
                     </span>
-                    <select
+                    <CustomSelect
                       name="type"
                       value={formData.type}
                       onChange={handlePositionInputChange}
                       required
-                      className="w-full bg-white/5 border-2 border-white/10 rounded-xl px-4 py-3 text-white focus:border-purple-500 focus:outline-none"
-                    >
-                      <option value="">Select type</option>
-                      <option value="Full-time">Full-time</option>
-                      <option value="Part-time">Part-time</option>
-                      <option value="Contract">Contract</option>
-                      <option value="Volunteer">Volunteer</option>
-                    </select>
+                      placeholder="Select type"
+                      options={[
+                        "Full-time",
+                        "Part-time",
+                        "Internship",
+                        "Contract",
+                        "Volunteer"
+                      ]}
+                      className="w-full"
+                    />
                   </label>
 
                   <label className="block">
@@ -1126,15 +1130,16 @@ export default function AdminDashboard({ initialSection = "applications" }) {
                     <span className="text-white/70 text-sm font-semibold mb-2 block">
                       Category *
                     </span>
-                    <select
+                    <CustomSelect
                       name="category"
                       value={teamForm.category}
                       onChange={handleTeamInputChange}
-                      className="w-full bg-white/5 border-2 border-white/10 rounded-xl px-4 py-3 text-white focus:border-purple-500 focus:outline-none"
-                    >
-                      <option value="board">Board</option>
-                      <option value="leadership">Leadership</option>
-                    </select>
+                      options={[
+                        { value: "board", label: "Board" },
+                        { value: "leadership", label: "Leadership" }
+                      ]}
+                      className="w-full"
+                    />
                   </label>
 
                   <label className="block">

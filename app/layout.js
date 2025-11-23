@@ -42,16 +42,20 @@ export const metadata = {
   },
 };
 
+import { LanguageProvider } from "@/components/providers/LanguageProvider";
+
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body
         className={`${jakarta.variable} ${mono.variable} font-sans antialiased`}
       >
-        <Header />
-        <ScrollManager />
-        {children}
-        <Footer />
+        <LanguageProvider>
+          <Header />
+          <ScrollManager />
+          {children}
+          <Footer />
+        </LanguageProvider>
       </body>
     </html>
   );
